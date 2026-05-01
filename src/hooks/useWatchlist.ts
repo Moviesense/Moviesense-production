@@ -38,5 +38,8 @@ export const useInfiniteFavorites = (perPage: number = 12) => {
     getNextPageParam: (lastPage) =>
       lastPage.hasNextPage ? lastPage.page + 1 : undefined,
     initialPageParam: 1,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+    staleTime: 0,
   });
 };

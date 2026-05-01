@@ -177,7 +177,7 @@ function WhosWatchingContent() {
           alt="Who is watching"
           width={400}
           height={200}
-          className="h-auto w-48 sm:w-64 md:w-80 lg:w-96 xl:w-[28rem] 2xl:w-[32rem] mt-4 mt-20 mb-8"
+          className="h-auto w-48 sm:w-64 md:w-80 lg:w-80 xl:w-96 2xl:w-[20rem] mt-4 mt-20 mb-8"
         />
         <h1 className="text-white text-lg sm:text-3xl xl:text-5xl font-medium mb-6 mt-6 sm:mb-12 sm:mb-12 tracking-tight text-center px-4">
           {isEditMode ? t("manageProfiles") : t("whoIsWatching")}
