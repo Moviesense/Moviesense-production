@@ -703,7 +703,7 @@ export function HeroCarousel({
               >
                 {/* Main Content: Title & Description */}
                 <div className="flex group/hero-content cursor-pointer flex-col items-center sm:items-start gap-0">
-                  {slide.bannerLogo ? (
+                  {/* {slide.bannerLogo ? (
                     <Image
                       src={getImageUrl(slide.bannerLogo)}
                       alt={slide.title}
@@ -716,18 +716,18 @@ export function HeroCarousel({
                           : "max-h-[60px] sm:h-[80px] xl:h-[140px] sm:max-h-[100px] 2xl:max-h-[150px] w-auto opacity-100 mb-2 xl:fixed xl:top-[-350%]",
                       )}
                     />
-                  ) : (
-                    <h1
-                      className={cn(
-                        "text-white font-bold transition-all duration-500 ease-in-out origin-left rtl:origin-right will-change-transform antialiased text-md text-center sm:text-start",
-                        from === "home"
-                          ? "2xl:text-5xl xl:text-4xl xl:scale-[0.8] opacity-45 xl:mb-[-1rem] group-hover/hero-content:scale-100 group-hover/hero-content:opacity-100 group-hover/hero-content:mb-2 mb-0 sm:mb-2"
-                          : "2xl:text-4xl xl:text-2xl opacity-100 mb-0 sm:mb-1",
-                      )}
-                    >
-                      {slide.title}
-                    </h1>
-                  )}
+                  ) : ( */}
+                  <h1
+                    className={cn(
+                      "text-white font-bold transition-all duration-500 ease-in-out origin-left rtl:origin-right will-change-transform antialiased text-md text-center sm:text-start",
+                      from === "home"
+                        ? "2xl:text-5xl xl:text-4xl xl:scale-[0.8] opacity-45 xl:mb-[-1rem] group-hover/hero-content:scale-100 group-hover/hero-content:opacity-100 group-hover/hero-content:mb-2 mb-0 sm:mb-2"
+                        : "2xl:text-4xl xl:text-2xl opacity-100 mb-0 sm:mb-1",
+                    )}
+                  >
+                    {slide.title}
+                  </h1>
+                  {/* )} */}
 
                   {from == "home" && (
                     <div

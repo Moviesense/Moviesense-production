@@ -243,7 +243,7 @@ export function Header() {
                 alt="logo"
                 width={180}
                 height={100}
-                className="mt-2"
+                className="mt-2 h-12 w-full"
               />
             </div>
 
@@ -733,7 +733,7 @@ export function Header() {
                 alt="logo"
                 width={180}
                 height={100}
-                className="mt-2"
+                className="mt-2 h-12 w-full"
               />
               {/* <span className="text-white font-bold tracking-tight">NABTT</span> */}
             </div>
