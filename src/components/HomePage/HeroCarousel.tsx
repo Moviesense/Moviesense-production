@@ -710,7 +710,7 @@ export function HeroCarousel({
                       width={500}
                       height={300}
                       className={cn(
-                        "object-contain transition-all duration-500 ease-in-out origin-left rtl:origin-right will-change-transform antialiased h-auto",
+                        "object-contain transition-all duration-500 ease-in-out origin-left rtl:origin-right will-change-transform antialiased h-auto rounded-md",
                         from === "home"
                           ? "max-h-[80px] w-auto sm:h-[80px] xl:h-[140px] sm:max-h-[120px] 2xl:max-h-[180px] w-auto opacity-45 xl:mb-[-1rem] group-hover/hero-content:h-[200px] group-hover/hero-content:opacity-100 mb-0"
                           : "max-h-[60px] sm:h-[80px] xl:h-[140px] sm:max-h-[100px] 2xl:max-h-[150px] w-auto opacity-100 mb-2 xl:fixed xl:top-[-350%]",
@@ -1104,7 +1104,7 @@ export function HeroCarousel({
                   alt={slide.title}
                   width={100}
                   height={100}
-                  className="h-full w-full aspect-[5/3] cursor-pointer object-cover rounded"
+                  className="h-full w-full aspect-[5/3] cursor-pointer object-cover rounded-md"
                 />
                 {/* Active Indicator: Bottom Border Gradient */}
                 {/* </button> */}
