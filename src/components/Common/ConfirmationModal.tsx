@@ -68,7 +68,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
             className="flex-1 h-14 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-bold"
           >
             {isLoading ? (
-              <Loader2 className="w-6 h-6 animate-spin mx-auto" />
+              <Loader2 className="w-6 h-6 animate-spin mx-auto text-primary" />
             ) : (
               okText
             )}

@@ -42,7 +42,7 @@ export const Toast: React.FC<ToastProps> = ({
     success: <CheckCircle className="w-5 h-5 text-emerald-500" />,
     error: <AlertCircle className="w-5 h-5 text-red-500" />,
     info: <Info className="w-5 h-5 text-blue-500" />,
-    loading: <Loader2 className="w-5 h-5 text-teal-500 animate-spin" />,
+    loading: <Loader2 className="w-5 h-5 text-primary animate-spin" />,
   };
 
   const bgColors = {

@@ -466,7 +466,7 @@ export default function SearchInput() {
             {/* Infinite Scroll Trigger */}
             <div ref={ref} className="flex justify-center py-8">
               {isFetchingNextPage && (
-                <Loader2 className="w-8 h-8 animate-spin text-[#25A4AD]" />
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
               )}
             </div>
           </>

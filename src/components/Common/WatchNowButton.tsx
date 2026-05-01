@@ -53,7 +53,7 @@ export function WatchNowButton({
       >
         <span className="flex h-8 w-8 sm:h-9 sm:w-9 flex-shrink-0 items-center justify-center rounded-full md:h-[40px] md:w-[40px] xl:h-[50px] xl:w-[50px] 2xl:h-[60px] 2xl:w-[60px] sm:bg-gradient-to-r sm:from-primary sm:to-secondary sm:group-hover/media-btn:to-primary transition-all">
           {isLoading ? (
-            <Loader2 className="w-5 h-5 animate-spin text-white" />
+            <Loader2 className="w-5 h-5 animate-spin text-primary" />
           ) : isRent ? (
             <Plus className="w-5 h-5 xl:w-7 xl:h-7 text-white" />
           ) : (

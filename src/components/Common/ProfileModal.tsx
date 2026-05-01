@@ -168,7 +168,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
             className="w-full h-14 sm:h-16 rounded-full text-lg sm:text-xl xl:texl-base font-bold mt-2 sm:mt-4"
           >
             {isSaving ? (
-              <Loader2 className="w-6 h-6 animate-spin mx-auto" />
+              <Loader2 className="w-6 h-6 animate-spin mx-auto text-primary" />
             ) : editingProfile ? (
               t("saveChanges")
             ) : (

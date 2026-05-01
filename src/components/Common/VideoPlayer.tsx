@@ -1231,7 +1231,7 @@ export function VideoPlayer({
             className="p-6 bg-black/40 rounded-full text-white pointer-events-auto hover:bg-black/60 transition-transform active:scale-90 flex items-center justify-center min-w-[96px] min-h-[96px] cursor-pointer"
           >
             {isLoadingEpisode ? (
-              <Loader2 size={48} className="animate-spin" />
+              <Loader2 size={48} className="animate-spin text-primary" />
             ) : isPlaying ? (
               <Pause size={48} fill="currentColor" />
             ) : (

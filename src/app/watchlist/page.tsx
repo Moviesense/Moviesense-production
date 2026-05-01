@@ -96,7 +96,7 @@ export default function WatchlistPage() {
 
         {isLoading ? (
           <div className="flex items-center justify-center h-64">
-            <Loader2 className="w-12 h-12 text-teal-500 animate-spin" />
+            <Loader2 className="w-12 h-12 text-primary animate-spin" />
           </div>
         ) : isError ? (
           <div className="text-center py-20 text-zinc-400">
@@ -160,7 +160,7 @@ export default function WatchlistPage() {
             {/* Infinite Scroll Trigger */}
             <div ref={ref} className="flex justify-center py-8">
               {isFetchingNextPage && (
-                <Loader2 className="w-8 h-8 animate-spin text-[#25A4AD]" />
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
               )}
             </div>
           </>

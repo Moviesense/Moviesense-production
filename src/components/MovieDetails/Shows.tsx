@@ -661,7 +661,7 @@ export function SeasonsAndEpisodes({
                 >
                   {isRentLoading ===
                   seasons.find((s) => s.season === openSeason)?._id ? (
-                    <Loader2 className="w-4 h-4 animate-spin text-white" />
+                    <Loader2 className="w-4 h-4 animate-spin text-primary" />
                   ) : (
                     t("rentNow")
                   )}

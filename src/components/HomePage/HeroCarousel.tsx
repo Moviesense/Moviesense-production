@@ -1031,7 +1031,7 @@ export function HeroCarousel({
                       className="h-[30px] w-[30px] 2xl:h-[40px] 2xl:w-[40px]"
                     >
                       {isFavoriteLoading ? (
-                        <Loader2 size={18} className="animate-spin" />
+                        <Loader2 size={18} className="animate-spin text-primary" />
                       ) : isFavorite ? (
                         <Check size={18} />
                       ) : (

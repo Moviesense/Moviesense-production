@@ -131,7 +131,7 @@ function WhosWatchingContent() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-neutral-900 flex items-center justify-center">
-        <Loader2 className="w-12 h-12 text-teal-500 animate-spin" />
+        <Loader2 className="w-12 h-12 text-primary animate-spin" />
       </div>
     );
   }
@@ -324,7 +324,7 @@ export default function WhosWatching() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-neutral-900 flex items-center justify-center">
-          <Loader2 className="w-12 h-12 text-teal-500 animate-spin" />
+          <Loader2 className="w-12 h-12 text-primary animate-spin" />
         </div>
       }
     >

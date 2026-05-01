@@ -183,7 +183,7 @@ export default function ResetPassword({ resetToken }: ResetPasswordProps) {
             className="w-full sm:w-90 mx-auto"
           >
             {isSubmitting ? (
-              <Loader2 className="w-5 h-5 animate-spin mx-auto" />
+              <Loader2 className="w-5 h-5 animate-spin mx-auto text-primary" />
             ) : (
               t("save")
             )}

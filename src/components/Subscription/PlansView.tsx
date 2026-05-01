@@ -231,7 +231,7 @@ export default function PlansView({ parsed }: Props) {
               className="h-12 px-5 rounded-md bg-primary text-white font-semibold disabled:opacity-50"
             >
               {validateCoupon.isPending ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="w-4 h-4 animate-spin text-primary" />
               ) : (
                 t("subApply")
               )}

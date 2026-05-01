@@ -166,7 +166,7 @@ export default function CreatePasswordView({
           className="w-full"
         >
           {isPending ? (
-            <Loader2 className="w-5 h-5 animate-spin mx-auto" />
+            <Loader2 className="w-5 h-5 animate-spin mx-auto text-primary" />
           ) : (
             t("subFinish")
           )}

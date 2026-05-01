@@ -159,7 +159,7 @@ export function Filter({
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 sm:px-10 h-[500px] overflow-y-auto content-start pr-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
             {isLoading ? (
               <div className="col-span-full flex items-center justify-center h-full">
-                <Loader2 className="w-10 h-10 animate-spin text-[#25A4AD]" />
+                <Loader2 className="w-10 h-10 animate-spin text-primary" />
               </div>
             ) : (
               getOptions().map((option) => {
