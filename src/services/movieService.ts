@@ -100,6 +100,12 @@ export const movieService = {
     const response = await api.post(`/favorite`, data);
     return response.data;
   },
+  checkFavorite: async (
+    movieId: string,
+  ): Promise<{ status: boolean; message: string; isFavorite: boolean }> => {
+    const response = await api.get(`/movie/${movieId}/isFavorite`);
+    return response.data;
+  },
   searchMovies: async (filters: SearchFilters): Promise<SearchResponse> => {
     const response = await api.get<SearchResponse>("/movie/search", {
       params: filters,

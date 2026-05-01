@@ -227,6 +227,7 @@ export function HeroCarousel({
   } | null>(null);
   const [localLikesCount, setLocalLikesCount] = useState(0);
   const [isRentLoading, setIsRentLoading] = useState(false);
+  const [isFavoriteLoading, setIsFavoriteLoading] = useState(false);
 
   const prev = () =>
     setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
@@ -254,12 +255,37 @@ export function HeroCarousel({
   const renewSubscription = useRenewSubscription();
 
   useEffect(() => {
-    if (currentSlide) {
-      setLocalLikesCount(currentSlide.totalLikes || 0);
-      setIsLiked(currentSlide.likeStatus ?? false);
-      setIsFavorite(currentSlide.isFavorite ?? false);
-    }
-  }, [current, currentSlide]);
+    if (!currentSlide) return;
+
+    setLocalLikesCount(currentSlide.totalLikes || 0);
+    setIsLiked(currentSlide.likeStatus ?? false);
+    setIsFavorite(currentSlide.isFavorite ?? false);
+
+    if (!isAuthenticated) return;
+
+    let cancelled = false;
+    const checkFavoriteStatus = async () => {
+      try {
+        setIsFavoriteLoading(true);
+        const response = await movieService.checkFavorite(
+          String(currentSlide._id),
+        );
+        if (!cancelled && response.status) {
+          setIsFavorite(response.isFavorite);
+        }
+      } catch (error) {
+        console.error("Error checking favorite status:", error);
+      } finally {
+        if (!cancelled) setIsFavoriteLoading(false);
+      }
+    };
+
+    checkFavoriteStatus();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentSlide?._id, isAuthenticated]);
 
   const handleUpgradePlan = async () => {
     track(AnalyticsEventType.updateSubscriptionByProfile);
@@ -999,18 +1025,18 @@ export function HeroCarousel({
                     <IconButton
                       title={t("myList")}
                       onClick={() => handleToggleFavorite()}
-                      disabled={toggleFavoriteMutation.isPending}
+                      disabled={
+                        toggleFavoriteMutation.isPending || isFavoriteLoading
+                      }
                       className="h-[30px] w-[30px] 2xl:h-[40px] 2xl:w-[40px]"
                     >
-                      {
-                        /* isFavoriteLoading ? (
+                      {isFavoriteLoading ? (
                         <Loader2 size={18} className="animate-spin" />
-                      ) : */ isFavorite ? (
-                          <Check size={18} />
-                        ) : (
-                          <Plus size={18} />
-                        )
-                      }
+                      ) : isFavorite ? (
+                        <Check size={18} />
+                      ) : (
+                        <Plus size={18} />
+                      )}
                     </IconButton>
                     <div className="flex items-center gap-2">
                       <IconButton
