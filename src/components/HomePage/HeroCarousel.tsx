@@ -1084,7 +1084,7 @@ export function HeroCarousel({
           </div>
 
           {/* THUMBNAILS (Desktop) */}
-          <div className="hidden xl:flex absolute opacity-50 hover:opacity-90 transition-all duration-300 bottom-10 lg:bottom-14 xl:bottom-55 start-1/2 -translate-x-1/2 z-20 justify-center gap-18">
+          <div className="hidden xl:flex absolute opacity-50 hover:opacity-90 transition-all duration-300 bottom-10 lg:bottom-14 xl:bottom-55 start-1/2 -translate-x-1/2 z-20 justify-center gap-12">
             {slides.map((slide, index) => (
               <div className="relative pb-6">
                 {/* <button
@@ -1104,7 +1104,7 @@ export function HeroCarousel({
                   alt={slide.title}
                   width={100}
                   height={100}
-                  className="h-full w-full aspect-[5/2] cursor-pointer"
+                  className="h-full w-full aspect-[5/3] cursor-pointer object-cover rounded"
                 />
                 {/* Active Indicator: Bottom Border Gradient */}
                 {/* </button> */}
