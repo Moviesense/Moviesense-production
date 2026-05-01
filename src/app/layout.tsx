@@ -19,9 +19,9 @@ export const metadata: Metadata = {
   description: "Movie Sense",
   manifest: "/manifest.json",
   icons: {
-    icon: "/logo-sense.png",
-    shortcut: "/logo-sense.png",
-    apple: "/logo-sense.png",
+    icon: "/images/logo-sense.png",
+    shortcut: "/images/logo-sense.png",
+    apple: "/icons/icon-192x192.png",
   },
   appleWebApp: {
     capable: true,
