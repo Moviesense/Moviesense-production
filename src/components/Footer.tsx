@@ -140,7 +140,7 @@ const Footer = () => {
       </div>
 
       <div className="max-w-7xl mx-auto mt-5 sm:mt-8 flex flex-col sm:flex-row justify-center gap-4 text-neutral-400 text-xs sm:text-sm text-center sm:text-left">
-        <span>{t("allRightsReserved")} @DATANETNY 2026</span>
+        <span>{t("allRightsReserved")} @MOVIESENSE 2026</span>
 
         {/* <div className="flex flex-wrap justify-center sm:justify-end gap-3 sm:gap-4">
           <span>{t("termsOfUse")}</span>
