@@ -9,6 +9,7 @@ export const translations = {
     signin: "Sign in",
     signup: "Sign up",
     subscribe: "Subscribe",
+    liveTV: "Live TV",
     signOut: "Sign Out",
     accountSettings: "Account Settings",
     language: "Language",

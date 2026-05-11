@@ -113,6 +113,7 @@ export function Header() {
           { name: t("watchlist"), path: "/watchlist" },
           // { name: t("downloads"), path: "/downloads" },
           // { name: t("loopr"), path: "/shorts" },
+          { name: t("liveTV"), path: "/live-tv" },
         ]
       : []),
   ];
