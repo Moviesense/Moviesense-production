@@ -175,7 +175,7 @@ export default function ReadyToWatch({
               <div className="w-1/3">
                 <select
                   {...register("phoneCode")}
-                  className="h-12 w-full rounded-md bg-transparent border border-neutral-400 text-white px-2 focus:outline-none focus:border-teal-500 appearance-none cursor-pointer text-xs 2xl:text-md"
+                  className="h-12 w-full rounded-md bg-transparent border border-neutral-400 text-white px-2 focus:outline-none focus:border-primary appearance-none cursor-pointer text-xs 2xl:text-md"
                 >
                   {COUNTRIES.map((c) => (
                     <option
