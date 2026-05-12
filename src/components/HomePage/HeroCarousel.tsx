@@ -364,7 +364,7 @@ export function HeroCarousel({
     setIsVideoReady(false);
     const timeout = setTimeout(() => {
       setCanPlayVideo(true);
-    }, 1500);
+    }, 500);
 
     return () => {
       stopAutoplay();
