@@ -1,6 +1,5 @@
-export const translations = {
-  en: {
-    home: "Home",
+const en = {
+  home: "Home",
     loopr: "Loopr",
     watchlist: "My List",
     downloads: "Downloads",
@@ -222,9 +221,9 @@ export const translations = {
     subAlreadyDone: "All set",
     subAlreadyDoneSub: "Your subscription and account are already active.",
     subSaveAmount: "Save",
-  },
+};
 
-  ar: {
+const ar: typeof en = {
     home: "الرئيسية",
     loopr: "Loopr",
     watchlist: "قائمتي",
@@ -234,6 +233,7 @@ export const translations = {
     signin: "تسجيل الدخول",
     signup: "إنشاء حساب",
     subscribe: "اشترك",
+    liveTV: "البث المباشر",
     signOut: "تسجيل الخروج",
     accountSettings: "إعدادات الحساب",
     language: "اللغة",
@@ -447,7 +447,8 @@ export const translations = {
     subAlreadyDone: "كل شيء جاهز",
     subAlreadyDoneSub: "اشتراكك وحسابك مفعّلان بالفعل.",
     subSaveAmount: "وفّر",
-  },
 };
 
-export type TranslationKey = keyof typeof translations.en;
+export const translations = { en, ar };
+
+export type TranslationKey = keyof typeof en;
