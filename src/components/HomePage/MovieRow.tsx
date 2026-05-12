@@ -10,22 +10,38 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import { IconButton } from "../Common/IconButton";
 
-function getVisibleCount(width: number) {
+function getVisibleCount(width: number, widgetType?: number) {
+  // Top 10 — portrait posters, more per row
+  if (widgetType === 2) {
+    if (width >= 1440) return 6;
+    if (width >= 1280) return 5;
+    if (width >= 768) return 5;
+    return 3.5;
+  }
+  // Large landscape thumbnails — fewer per row so each is bigger
+  if (widgetType === 4) {
+    if (width >= 1440) return 4;
+    if (width >= 1280) return 3;
+    if (width >= 768) return 3;
+    return 1.5;
+  }
+  // Small landscape thumbnails (type 3) and default
   if (width >= 1440) return 6;
   if (width >= 1280) return 4;
-  // // if (width >= 1024) return ;
   if (width >= 768) return 6;
-  return 3.5; // mobile peek
+  return 3.5;
 }
 
 export function MovieRow({
   title,
   items,
   hideTitle = false,
+  widgetType,
 }: {
   title: string;
   items: MovieCardProps[];
   hideTitle?: boolean;
+  widgetType?: number;
 }) {
   const { isRTL, t } = useLanguage();
   const router = useRouter();
@@ -44,6 +60,7 @@ export function MovieRow({
 
   const handleHover = (data: MovieCardProps, rect: DOMRect) => {
     if (window.innerWidth < 1280) return;
+    if (widgetType === 2) return;
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     hoverTimeoutRef.current = setTimeout(() => {
       setHoveredItem({ data, rect, actions: true });
@@ -92,14 +109,14 @@ export function MovieRow({
   useEffect(() => {
     const update = () => {
       const width = window.innerWidth;
-      setVisible(getVisibleCount(width));
+      setVisible(getVisibleCount(width, widgetType));
       setGap(width >= 640 ? 12 : 8);
     };
 
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
-  }, []);
+  }, [widgetType]);
 
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -216,6 +233,7 @@ export function MovieRow({
                 <MovieCard
                   id={item.id || i}
                   {...item}
+                  widgetType={widgetType}
                   sectionTitle={title}
                   onHover={handleHover}
                   onLeave={handleLeave}

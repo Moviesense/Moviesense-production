@@ -15,20 +15,7 @@ const signupSchema = z.object({
 
 type SignupFormValues = z.infer<typeof signupSchema>;
 
-const COUNTRIES = [
-  { code: "AE", name: "UAE (+971)", dialCode: "+971" },
-  { code: "SA", name: "Saudi Arabia (+966)", dialCode: "+966" },
-  { code: "EG", name: "Egypt (+20)", dialCode: "+20" },
-  { code: "QA", name: "Qatar (+974)", dialCode: "+974" },
-  { code: "KW", name: "Kuwait (+965)", dialCode: "+965" },
-  { code: "OM", name: "Oman (+968)", dialCode: "+968" },
-  { code: "BH", name: "Bahrain (+973)", dialCode: "+973" },
-  { code: "JO", name: "Jordan (+962)", dialCode: "+962" },
-  { code: "LB", name: "Lebanon (+961)", dialCode: "+961" },
-  { code: "IN", name: "India (+91)", dialCode: "+91" },
-  { code: "US", name: "USA (+1)", dialCode: "+1" },
-  { code: "GB", name: "UK (+44)", dialCode: "+44" },
-];
+import { COUNTRIES, DEFAULT_COUNTRY_CODE, findCountry } from "@/lib/countries";
 
 import { useEffect, useState } from "react";
 import { Alert } from "@/components/Common/Alert";
@@ -80,8 +67,8 @@ export default function ReadyToWatch({
     resolver: zodResolver(signupSchema),
     mode: "onChange",
     defaultValues: {
-      country: "US",
-      phoneCode: "+971",
+      country: DEFAULT_COUNTRY_CODE,
+      phoneCode: findCountry(DEFAULT_COUNTRY_CODE)?.dialCode || "+61",
       mobileNumber: "",
     },
   });
@@ -92,10 +79,9 @@ export default function ReadyToWatch({
   useEffect(() => {
     const initCountry = async () => {
       const countryCode = await getCountry();
-      setValue("country", countryCode);
-
-      const countryData = COUNTRIES.find((c) => c.code === countryCode);
+      const countryData = findCountry(countryCode);
       if (countryData) {
+        setValue("country", countryData.code);
         setValue("phoneCode", countryData.dialCode);
       }
     };
@@ -198,7 +184,7 @@ export default function ReadyToWatch({
                       style={{ backgroundColor: "#181d25" }}
                       className="text-xs 2xl:text-md"
                     >
-                      {c.name}
+                      {c.name} ({c.dialCode})
                     </option>
                   ))}
                 </select>
@@ -228,16 +214,16 @@ export default function ReadyToWatch({
         </form>
 
         {/* OR Divider */}
-        <div className="flex items-center w-full sm:w-100">
+        {/* <div className="flex items-center w-full sm:w-100">
           <div className="flex-grow h-px bg-neutral-400"></div>
           <span className="px-4 text-neutral-400 text-sm font-medium">
             {t("orContinueWith")}
           </span>
           <div className="flex-grow h-px bg-neutral-400"></div>
-        </div>
+        </div> */}
 
         {/* Social Buttons */}
-        <div className="w-full flex items-center justify-center gap-4">
+        {/* <div className="w-full flex items-center justify-center gap-4">
           <div
             onClick={handleGoogleSignup}
             className="p-2 w-10 h-10 flex items-center transition-transform cursor-pointer justify-center border border-neutral-400 rounded-full"
@@ -250,7 +236,7 @@ export default function ReadyToWatch({
               className="hover:scale-110"
             />
           </div>
-          {/* <div className="p-2 w-10 h-10 flex items-center transition-transform cursor-pointer justify-center border border-neutral-400 rounded-full">
+          <div className="p-2 w-10 h-10 flex items-center transition-transform cursor-pointer justify-center border border-neutral-400 rounded-full">
             <Image
               src="/images/apple.png"
               alt="Apple"
@@ -258,8 +244,8 @@ export default function ReadyToWatch({
               height={20}
               className="hover:scale-110"
             />
-          </div> */}
-        </div>
+          </div>
+        </div> */}
 
         {/* Signin Link */}
         <div className="flex gap-2 text-stone-300 text-sm sm:text-base">

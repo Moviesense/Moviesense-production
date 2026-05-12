@@ -63,6 +63,7 @@ export function WidgetRow({ widget, isSettingsLoading }: WidgetRowProps) {
           title={language == "ar" ? widget.arabicTitle : widget.title}
           items={items}
           hideTitle={false}
+          widgetType={widget.type}
         />
       )}
     </div>

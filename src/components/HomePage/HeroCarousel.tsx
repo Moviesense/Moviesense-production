@@ -729,7 +729,7 @@ export function HeroCarousel({
               >
                 {/* Main Content: Title & Description */}
                 <div className="flex group/hero-content cursor-pointer flex-col items-center sm:items-start gap-0">
-                  {slide.bannerLogo ? (
+                  {slide.bannerLogo && from == "home" ? (
                     <Image
                       src={getImageUrl(slide.bannerLogo)}
                       alt={slide.title}
@@ -821,14 +821,16 @@ export function HeroCarousel({
                         {t("availableWithPremium")}
                       </span>
                     )}
-                    {slide.type === "FREE" && !isSubscribed && (
-                      <span className="font-bold flex items-center gap-2 mt-1">
-                        <span className="bg-primary rounded-full p-1">
-                          <Sparkle size={11} fill="#fff" />
-                        </span>{" "}
-                        {t("oneEpisodeFree")}
-                      </span>
-                    )}
+                    {slide.type === "FREE" &&
+                      !isSubscribed &&
+                      slide.mediaType !== "movie" && (
+                        <span className="font-bold flex items-center gap-2 mt-1">
+                          <span className="bg-primary rounded-full p-1">
+                            <Sparkle size={11} fill="#fff" />
+                          </span>{" "}
+                          {t("oneEpisodeFree")}
+                        </span>
+                      )}
                   </h2>
 
                   {/* Metadata Row: Runtime, Episode Info, Genres */}

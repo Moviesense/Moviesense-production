@@ -42,6 +42,20 @@ export interface MovieCardProps {
   isRented?: boolean;
   expiryDate?: string;
   clicksLeft?: number;
+  widgetType?: number;
+}
+
+function getThumbnailAspect(widgetType?: number) {
+  switch (widgetType) {
+    case 2:
+      return "aspect-[2/3]";
+    case 3:
+      return "aspect-video";
+    case 4:
+      return "aspect-video";
+    default:
+      return "aspect-video";
+  }
 }
 
 export function MovieCard({
@@ -72,6 +86,7 @@ export function MovieCard({
   isFavorite,
   type,
   isRented,
+  widgetType,
 }: MovieCardProps) {
   const { t } = useLanguage();
   const router = useRouter();
@@ -108,6 +123,7 @@ export function MovieCard({
           isFavorite,
           type,
           isRented,
+          widgetType,
         },
         rect,
       );
@@ -127,7 +143,7 @@ export function MovieCard({
     >
       {/* IMAGE */}
       <div
-        className={`relative w-full xl:aspect-video overflow-hidden rounded-md ${sectionTitle?.includes("Ramadan") || episodeNumber ? "rounded-b-none" : ""} ${episodeNumber ? "aspect-video" : "aspect-[2/3]"} ${className}`}
+        className={`relative w-full overflow-hidden rounded-md ${episodeNumber ? "rounded-b-none aspect-video" : getThumbnailAspect(widgetType)} ${className}`}
       >
         {image && image !== "" ? (
           <Image
