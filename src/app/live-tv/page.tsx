@@ -408,7 +408,7 @@ export default function LiveTVPage() {
       <Header />
 
       {/* HERO / PLAYER */}
-      <section className="relative h-[40vh] sm:h-[55vh] md:h-[65vh] lg:h-[78vh] xl:h-[86vh] bg-black">
+      <section className="relative h-[40vh] sm:h-[55vh] md:h-[65vh] lg:h-[78vh] xl:h-[86vh] bg-black mt-[8rem] lg:mt-0">
         {streamUnavailable ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 sm:gap-3 text-white px-4 text-center">
             <span className="text-xl sm:text-2xl md:text-3xl font-semibold">

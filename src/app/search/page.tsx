@@ -30,7 +30,6 @@ import { BackgroundVideo } from "@/components/Common/BackgroundVideo";
 
 const MEDIA_TYPES = [
   { id: "movie", name: "Movies" },
-  { id: "series", name: "Series" },
   { id: "tv", name: "TV Shows" },
 ];
 

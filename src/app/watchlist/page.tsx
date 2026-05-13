@@ -89,7 +89,7 @@ export default function WatchlistPage() {
     <section className="min-h-[100vh] flex flex-col">
       {/* <BackgroundVideo /> */}
       <Header />
-      <div className="flex-grow px-4 sm:px-6 md:px-12 mb-12 mt-16 sm:mt-26">
+      <div className="flex-grow px-4 sm:px-6 md:px-12 mb-12 mt-[8rem] sm:mt-26">
         <h2 className="text-white text-xl sm:text-3xl font-bold">
           {t("watchlist")}
         </h2>

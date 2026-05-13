@@ -109,13 +109,35 @@ export function Header() {
     ...(isAuthenticated
       ? [
           { name: t("home"), path: "/home" },
-          // { name: t("tvShows"), path: "/tv-shows" },
+          { name: t("movies"), path: "/movies" },
+          { name: t("tvShows"), path: "/tv-shows" },
           { name: t("watchlist"), path: "/watchlist" },
           // { name: t("downloads"), path: "/downloads" },
           // { name: t("loopr"), path: "/shorts" },
           { name: t("liveTV"), path: "/live-tv" },
         ]
-      : []),
+      : [
+          { name: t("home"), path: "/home" },
+          { name: t("movies"), path: "/movies" },
+          { name: t("tvShows"), path: "/tv-shows" },
+        ]),
+  ];
+
+  const subItems = [
+    ...(isAuthenticated
+      ? [
+          { name: t("home"), path: "/home" },
+          { name: t("movies"), path: "/movies" },
+          { name: t("tvShows"), path: "/tv-shows" },
+          // { name: t("downloads"), path: "/downloads" },
+          // { name: t("loopr"), path: "/shorts" },
+          // { name: t("liveTV"), path: "/live-tv" },
+        ]
+      : [
+          { name: t("home"), path: "/home" },
+          { name: t("movies"), path: "/movies" },
+          { name: t("tvShows"), path: "/tv-shows" },
+        ]),
   ];
 
   const handleNavigation = (path: string) => {
@@ -156,7 +178,7 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 flex z-1000 items-center justify-between px-3 md:px-5 xl:px-8 z-50 transition-colors duration-300 ${
+      className={`fixed top-0 left-0 right-0 flex flex-wrap z-1000 items-center justify-between px-3 md:px-5 xl:px-8 z-50 transition-colors duration-300 ${
         isScrolled ||
         pathname === "/login" ||
         pathname === "/signup" ||
@@ -235,7 +257,7 @@ export function Header() {
             </button>
 
             <div
-              className="flex items-center cursor-pointer absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 py-2"
+              className="flex items-center cursor-pointer absolute left-1/2 top-1/4 -translate-x-1/2 -translate-y-1/2 py-2"
               onClick={handleProfileClick}
             >
               <Image
@@ -272,6 +294,32 @@ export function Header() {
                 )}
               </div>
             </div>
+          </div>
+        )}
+
+      {/* Mobile Sub-Nav (top quick links) */}
+      {pathname !== "/login" &&
+        pathname !== "/signup" &&
+        pathname !== "/forgot-password" &&
+        !pathname?.startsWith("/user/changePassword") &&
+        subItems.length > 0 && (
+          <div className="flex lg:hidden w-full items-center gap-2 overflow-x-auto no-scrollbar pb-2 pt-4">
+            {subItems.map((item) => {
+              const isActive = pathname === item.path;
+              return (
+                <button
+                  key={item.name}
+                  onClick={() => router.push(item.path)}
+                  className={`text-sm font-medium px-4 py-2 rounded-md whitespace-nowrap transition-colors cursor-pointer flex-shrink-0 ${
+                    isActive
+                      ? "bg-primary text-white"
+                      : "bg-white/10 text-white hover:bg-white/10"
+                  }`}
+                >
+                  {item.name}
+                </button>
+              );
+            })}
           </div>
         )}
 

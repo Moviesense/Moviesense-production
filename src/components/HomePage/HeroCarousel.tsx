@@ -586,7 +586,7 @@ export function HeroCarousel({
   return (
     <section
       className={cn(
-        "relative overflow-hidden group h-[70vh] sm:h-[50vh] lg:h-[40vh] xl:h-[120vh]",
+        "relative overflow-hidden group h-[70vh] sm:h-[50vh] lg:h-[40vh] xl:h-[120vh] mt-[8rem] lg:mt-0",
         from == "movie" && "h-[72vh] sm:h-[55vh] xl:h-[90vh]",
       )}
       onMouseEnter={stopAutoplay}
@@ -738,7 +738,7 @@ export function HeroCarousel({
                       className={cn(
                         "object-contain transition-all duration-500 ease-in-out origin-left rtl:origin-right will-change-transform antialiased h-auto rounded-md",
                         from === "home"
-                          ? "max-h-[80px] w-auto sm:h-[80px] xl:h-[140px] sm:max-h-[120px] 2xl:max-h-[180px] w-auto opacity-45 xl:mb-[-1rem] group-hover/hero-content:h-[200px] group-hover/hero-content:opacity-100 mb-0"
+                          ? "max-h-[80px] w-auto sm:h-[80px] xl:h-[140px] sm:max-h-[120px] 2xl:max-h-[180px] w-auto opacity-100 xl:mb-[-1rem] group-hover/hero-content:h-[200px] group-hover/hero-content:opacity-100 mb-0"
                           : "max-h-[60px] sm:h-[80px] xl:h-[140px] sm:max-h-[100px] 2xl:max-h-[150px] w-auto opacity-100 mb-2 xl:fixed xl:top-[-350%]",
                       )}
                     />
@@ -747,7 +747,7 @@ export function HeroCarousel({
                       className={cn(
                         "text-white font-bold transition-all duration-500 ease-in-out origin-left rtl:origin-right will-change-transform antialiased text-md text-center sm:text-start",
                         from === "home"
-                          ? "2xl:text-5xl xl:text-4xl xl:scale-[0.8] opacity-45 xl:mb-[-1rem] group-hover/hero-content:scale-100 group-hover/hero-content:opacity-100 group-hover/hero-content:mb-2 mb-0 sm:mb-2"
+                          ? "2xl:text-5xl xl:text-4xl xl:scale-[0.8] opacity-100 xl:mb-[-1rem] group-hover/hero-content:scale-100 group-hover/hero-content:opacity-100 group-hover/hero-content:mb-2 mb-0 sm:mb-2"
                           : "2xl:text-4xl xl:text-2xl opacity-100 mb-0 sm:mb-1",
                       )}
                     >
@@ -760,7 +760,7 @@ export function HeroCarousel({
                       className={cn(
                         "max-w-xl text-sm font-medium sm:text-md xl:text-lg transition-all duration-500 ease-in-out line-clamp-1 sm:line-clamp-2 xl:line-clamp-none capitalize mb-0 px-2 sm:px-0 sm:mb-0",
                         from === "home"
-                          ? "opacity-45 group-hover/hero-content:opacity-100 group-hover/hero-content:line-clamp-none xl:mt-8 hidden sm:block"
+                          ? "opacity-100 group-hover/hero-content:opacity-100 group-hover/hero-content:line-clamp-none xl:mt-8 hidden sm:block"
                           : "opacity-100 mt-2",
                       )}
                     >
@@ -772,7 +772,7 @@ export function HeroCarousel({
                     className={cn(
                       "text-white mt-1 font-bold transition-all duration-500 ease-in-out origin-left rtl:origin-right will-change-transform antialiased text-xs sm:text-xl text-center sm:text-start",
                       from === "home"
-                        ? "opacity-45 group-hover/hero-content:opacity-100"
+                        ? "opacity-100 group-hover/hero-content:opacity-100"
                         : "opacity-100",
                     )}
                   >
@@ -838,7 +838,7 @@ export function HeroCarousel({
                     className={cn(
                       "flex flex-wrap items-center gap-3 mt-1 xl:mt-3 mb-1 xl:mb-0 transition-all duration-500 ease-in-out",
                       from === "home"
-                        ? "opacity-45 group-hover/hero-content:opacity-100"
+                        ? "opacity-100 group-hover/hero-content:opacity-100"
                         : "opacity-100",
                     )}
                   >
@@ -934,7 +934,7 @@ export function HeroCarousel({
                     className={cn(
                       "transition-all duration-500 ease-in-out",
                       from === "home"
-                        ? "xl:opacity-45 group-hover/hero-content:opacity-100 xl:mt-2"
+                        ? "xl:opacity-100 group-hover/hero-content:opacity-100 xl:mt-2"
                         : "opacity-100 sm:hidden",
                     )}
                   />
@@ -945,7 +945,7 @@ export function HeroCarousel({
                         "max-w-xl text-sm font-medium sm:text-md xl:text-lg transition-all duration-500 ease-in-out line-clamp-2 xl:line-clamp-none capitalize mb-0 sm:mb-0 hidden sm:flex",
                         from === "movie"
                           ? "opacity-100"
-                          : "xl:opacity-45 group-hover/hero-content:opacity-100 group-hover/hero-content:line-clamp-none xl:mt-6",
+                          : "xl:opacity-100 group-hover/hero-content:opacity-100 group-hover/hero-content:line-clamp-none xl:mt-6",
                       )}
                     >
                       {stripHtml(slide.description)}

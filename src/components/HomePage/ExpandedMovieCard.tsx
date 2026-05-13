@@ -293,14 +293,21 @@ export function ExpandedMovieCard({
                 </div>
               )}
               {type !== "PAYPERVIEWS" &&
-                ((freeEpisode && !isSubscribed && mediaType !== "movie" && (
+                (type === "FREE" && mediaType === "movie" ? (
+                  <span className="text-sm md:text-sm xl:text-md 2xl:text-base font-bold flex items-center gap-2 mt-1">
+                    <span className="bg-primary rounded-full p-1">
+                      <Sparkle size={11} fill="#fff" />
+                    </span>{" "}
+                    {t("free")}
+                  </span>
+                ) : freeEpisode && !isSubscribed ? (
                   <span className="text-sm md:text-sm xl:text-md 2xl:text-base font-bold flex items-center gap-2 mt-1">
                     <span className="bg-secondary rounded-full p-1">
                       <Sparkle size={11} fill="#fff" />
                     </span>{" "}
                     {t("oneEpisodeFree")}
                   </span>
-                )) || (
+                ) : (
                   <span className="text-sm md:text-sm xl:text-md 2xl:text-base font-bold flex items-center gap-2 mt-1">
                     <span className="bg-primary rounded-full p-1">
                       <Sparkle size={11} fill="#fff" />
