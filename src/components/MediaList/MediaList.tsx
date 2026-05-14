@@ -159,7 +159,7 @@ export function MediaList({ mediaType, heading }: MediaListProps) {
   };
 
   return (
-    <section className="max-w-7xl mx-auto min-h-screen flex flex-col mt-[7rem] lg:mt-20">
+    <section className="mx-auto min-h-screen flex flex-col mt-[7rem] lg:mt-20">
       <div className="flex flex-col px-4 sm:px-6 md:px-12 mt-4 sm:mt-8 gap-4 sm:gap-6">
         <div className="flex relative items-start gap-4 lg:gap-8 flex-col">
           <h1 className="text-white text-lg sm:text-2xl font-bold ">
@@ -218,7 +218,7 @@ export function MediaList({ mediaType, heading }: MediaListProps) {
           </div>
         ) : movies.length > 0 ? (
           <>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-1">
+            <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-1">
               <AnimatePresence mode="popLayout">
                 {movies.map((movie, i) => (
                   <motion.div
