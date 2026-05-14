@@ -977,7 +977,7 @@ export function HeroCarousel({
                             <div className="flex items-center" key={genre._id}>
                               <div className="w-1.5 h-1.5 mr-2 bg-primary rounded-full"></div>
                               <span className="text-xs xl:text-sm 2xl:text-base text-neutral-400 font-medium tracking-wider capitalize">
-                                {genre.name}
+                                {genre.name.toLowerCase()}
                               </span>
                             </div>
                           ),
