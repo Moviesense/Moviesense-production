@@ -45,9 +45,9 @@ export function MovieInfoSidebar({
       )}
 
       {/* Ratings */}
-      <InfoBlock title={t("ratings")}>
+      {/* <InfoBlock title={t("ratings")}>
         <Ratings ratings={ratings} />
-      </InfoBlock>
+      </InfoBlock> */}
 
       {/* Genres */}
       {genres.length > 0 && (
