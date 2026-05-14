@@ -43,12 +43,11 @@ export interface MovieCardProps {
   expiryDate?: string;
   clicksLeft?: number;
   widgetType?: number;
+  rank?: number;
 }
 
 function getThumbnailAspect(widgetType?: number) {
   switch (widgetType) {
-    case 2:
-      return "aspect-[2/3]";
     case 3:
       return "aspect-video";
     case 4:
@@ -87,6 +86,7 @@ export function MovieCard({
   type,
   isRented,
   widgetType,
+  rank,
 }: MovieCardProps) {
   const { t } = useLanguage();
   const router = useRouter();
@@ -124,6 +124,7 @@ export function MovieCard({
           type,
           isRented,
           widgetType,
+          rank,
         },
         rect,
       );
@@ -169,6 +170,16 @@ export function MovieCard({
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
         {sectionTitle === "Top 10" && <Top10Tag />}
+        {widgetType === 2 && rank && (
+          <div className="absolute top-2 right-2 z-10 flex items-center gap-1 rounded-md bg-gradient-to-br from-[#B50B8D] to-[#F80C37] px-2 py-1 shadow-lg shadow-black/40 ring-1 ring-white/10">
+            <span className="text-[8px] font-bold uppercase tracking-wider text-white/90 leading-none">
+              Top
+            </span>
+            <span className="text-sm sm:text-base font-extrabold text-white leading-none">
+              {rank}
+            </span>
+          </div>
+        )}
         {/* FOOTER */}
         {footer}
       </div>

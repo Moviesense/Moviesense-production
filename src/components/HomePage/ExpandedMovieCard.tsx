@@ -70,6 +70,8 @@ export function ExpandedMovieCard({
   expiryDate,
   clicksLeft,
   type,
+  widgetType,
+  rank,
 }: ExpandedMovieCardProps) {
   const router = useRouter();
   const { track } = useAnalytics();
@@ -244,6 +246,16 @@ export function ExpandedMovieCard({
         </div>
 
         {sectionTitle === "Top 10" && <Top10Tag />}
+        {widgetType === 2 && rank && (
+          <div className="absolute top-2 right-2 z-10 flex items-center gap-1 rounded-md bg-gradient-to-br from-[#B50B8D] to-[#F80C37] px-2 py-1 shadow-lg shadow-black/40 ring-1 ring-white/10">
+            <span className="text-[8px] font-bold uppercase tracking-wider text-white/90 leading-none">
+              Top
+            </span>
+            <span className="text-sm sm:text-base font-extrabold text-white leading-none">
+              {rank}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* CONTENT */}

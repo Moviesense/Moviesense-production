@@ -11,13 +11,6 @@ import { useLanguage } from "@/context/LanguageContext";
 import { IconButton } from "../Common/IconButton";
 
 function getVisibleCount(width: number, widgetType?: number) {
-  // Top 10 — portrait posters, more per row
-  if (widgetType === 2) {
-    if (width >= 1440) return 6;
-    if (width >= 1280) return 5;
-    if (width >= 768) return 5;
-    return 3.5;
-  }
   // Large landscape thumbnails — fewer per row so each is bigger
   if (widgetType === 4) {
     if (width >= 1440) return 4;
@@ -25,11 +18,11 @@ function getVisibleCount(width: number, widgetType?: number) {
     if (width >= 768) return 3;
     return 1.5;
   }
-  // Small landscape thumbnails (type 3) and default
-  if (width >= 1440) return 6;
+  // Top 10 (type 2), small landscape (type 3), and default
+  if (width >= 1440) return 5;
   if (width >= 1280) return 4;
-  if (width >= 768) return 6;
-  return 3.5;
+  if (width >= 768) return 5;
+  return 2.5;
 }
 
 export function MovieRow({
@@ -60,7 +53,6 @@ export function MovieRow({
 
   const handleHover = (data: MovieCardProps, rect: DOMRect) => {
     if (window.innerWidth < 1280) return;
-    if (widgetType === 2) return;
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     hoverTimeoutRef.current = setTimeout(() => {
       setHoveredItem({ data, rect, actions: true });
@@ -234,6 +226,7 @@ export function MovieRow({
                   id={item.id || i}
                   {...item}
                   widgetType={widgetType}
+                  rank={widgetType === 2 ? i + 1 : undefined}
                   sectionTitle={title}
                   onHover={handleHover}
                   onLeave={handleLeave}
