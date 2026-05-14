@@ -54,7 +54,7 @@ export function WidgetRow({ widget, isSettingsLoading }: WidgetRowProps) {
             .map((_, i) => (
               <div
                 key={i}
-                className="w-30 xl:w-80 aspect-[2.5/4.2] xl:aspect-[7/4] skeleton-card rounded-lg flex-shrink-0 bg-background"
+                className="w-30 xl:w-80 aspect-video skeleton-card rounded-lg flex-shrink-0 bg-background"
               />
             ))}
         </div>

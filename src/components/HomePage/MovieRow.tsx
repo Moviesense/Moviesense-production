@@ -22,7 +22,7 @@ function getVisibleCount(width: number, widgetType?: number) {
   if (width >= 1440) return 5;
   if (width >= 1280) return 4;
   if (width >= 768) return 5;
-  return 2.5;
+  return 2.2;
 }
 
 export function MovieRow({
