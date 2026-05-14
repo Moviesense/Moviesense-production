@@ -222,7 +222,7 @@ export function MediaList({ mediaType, heading, genre }: MediaListProps) {
           </div>
         ) : movies.length > 0 ? (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-6 gap-1">
+            <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-7 gap-1">
               <AnimatePresence mode="popLayout">
                 {movies.map((movie, i) => (
                   <motion.div
@@ -251,7 +251,7 @@ export function MediaList({ mediaType, heading, genre }: MediaListProps) {
                       mediaType={movie.media_type || movie.type}
                       totalLikes={movie.totalLikes}
                       likeStatus={movie.likeStatus}
-                      widgetType={2}
+                      widgetType={0}
                       isFavorite={movie.isFavorite}
                       className="rounded-md"
                       footer={

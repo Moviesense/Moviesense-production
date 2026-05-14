@@ -390,7 +390,7 @@ export function Header() {
         !pathname?.startsWith("/user/changePassword") &&
         subItems.length > 0 && (
           <div className="relative lg:hidden w-full mobile-categories-dropdown">
-            <div className="flex w-full items-center gap-2 overflow-x-auto no-scrollbar pb-2 pt-4">
+            <div className="flex w-full justify-between items-center gap-2 overflow-x-auto no-scrollbar pb-2 pt-4">
               {subItems.map((item) => {
                 const isActive = pathname === item.path;
                 return (
@@ -400,7 +400,7 @@ export function Header() {
                       subItemRefs.current.set(item.path, el);
                     }}
                     onClick={() => router.push(item.path)}
-                    className={`text-sm font-medium px-4 py-2 rounded-md whitespace-nowrap transition-colors cursor-pointer flex-shrink-0 ${
+                    className={`text-sm font-medium px-3 py-2 rounded-md whitespace-nowrap transition-colors cursor-pointer flex-shrink-0 ${
                       isActive
                         ? "bg-primary text-white"
                         : "bg-white/10 text-white hover:bg-white/10"

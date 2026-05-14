@@ -48,6 +48,8 @@ export interface MovieCardProps {
 
 function getThumbnailAspect(widgetType?: number) {
   switch (widgetType) {
+    case 0:
+      return "aspect-[2/3]";
     case 3:
       return "aspect-video";
     case 4:
