@@ -233,7 +233,7 @@ export default function MovieDetailsPage({
                   : "text-neutral-400 hover:text-neutral-200",
               )}
             >
-              Trailors & More
+              Trailers & More
               {activeTab === "trailors" && (
                 <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
               )}

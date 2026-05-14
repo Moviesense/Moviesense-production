@@ -236,9 +236,9 @@ export function HeroCarousel({
     setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
 
   const startAutoplay = () => {
-    // if (!autoplay) return;
-    // stopAutoplay();
-    // timerRef.current = setInterval(next, interval);
+    if (!autoplay) return;
+    stopAutoplay();
+    timerRef.current = setInterval(next, interval);
   };
 
   const stopAutoplay = () => {
@@ -1102,20 +1102,22 @@ export function HeroCarousel({
             <ChevronRight className="text-white w-5 h-5 sm:w-6 sm:h-6" />
           </Button> */}
           {/* DOTS (Mobile) */}
-          <div className="absolute bottom-4 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 sm:bottom-10 sm:end-[-13rem] sm:translate-x-0 lg:bottom-10 lg:end-[-18rem] flex justify-center gap-1 sm:gap-2 xl:start-1/2 xl:-translate-x-1/2 xl:bottom-60 lg:gap-2 z-20 xl:opacity-0 xl:group-hover:opacity-100 rtl:xl:translate-x-1/2 xl:hidden">
+          <div className="absolute bottom-4 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 sm:bottom-10 sm:end-[-13rem] sm:translate-x-0 lg:bottom-10 lg:end-[-18rem] flex justify-center gap-1 sm:gap-2 xl:start-1/2 xl:-translate-x-1/2 xl:bottom-60 lg:gap-2 z-20 rtl:xl:translate-x-1/2">
             {slides.map((_, index) => (
               <div
                 key={index}
                 onClick={() => setCurrent(index)}
-                className={`h-1.5 rounded-full cursor-pointer transition-all border-none shadow-none p-0 ${
-                  current === index ? "w-6 bg-primary" : "w-1.5 bg-white/40"
+                className={`h-1.5 xl:h-2 rounded-full cursor-pointer transition-all border-none shadow-none p-0  ${
+                  current === index
+                    ? "w-6 xl:w-8 bg-primary"
+                    : "w-1.5 xl:w-2 bg-white/40 hover:scale-150"
                 }`}
               />
             ))}
           </div>
 
           {/* THUMBNAILS (Desktop) */}
-          <div className="hidden xl:flex absolute opacity-50 hover:opacity-90 transition-all duration-300 bottom-10 lg:bottom-14 xl:bottom-55 start-1/2 -translate-x-1/2 z-20 justify-center gap-12">
+          <div className="hidden absolute opacity-50 hover:opacity-90 transition-all duration-300 bottom-10 lg:bottom-14 xl:bottom-55 start-1/2 -translate-x-1/2 z-20 justify-center gap-12">
             {slides.map((slide, index) => (
               <div className="relative pb-6">
                 {/* <button
