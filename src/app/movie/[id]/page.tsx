@@ -153,7 +153,7 @@ export default function MovieDetailsPage({
 
   // Map ratings data
   const ratings = [
-    { title: "IMDb", value: movie.contentRating || 0 },
+    { title: "", value: movie.contentRating || 0 },
     // { title: "Maturity", value: movie.maturity || "G" },
   ].filter((r) => r.value !== 0);
   // Map seasons data
