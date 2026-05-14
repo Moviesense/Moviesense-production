@@ -259,7 +259,7 @@ export default function MovieDetailsPage({
           {activeTab === "more-info" && (
             <div className="space-y-6">
               <DescriptionSection description={movie.description} />
-              {/* <MovieInfoSidebar
+              <MovieInfoSidebar
                 releasedYear={new Date(movie.year).getFullYear().toString()}
                 languages={[]}
                 genres={[]}
@@ -268,7 +268,7 @@ export default function MovieDetailsPage({
                 music={movie.music}
               />
               {cast.length > 0 && <CastSection cast={cast} />}
-              {reviews.length > 0 && <ReviewsSection reviews={reviews} />} */}
+              {reviews.length > 0 && <ReviewsSection reviews={reviews} />}
             </div>
           )}
 
