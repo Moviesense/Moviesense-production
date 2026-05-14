@@ -729,7 +729,7 @@ export function HeroCarousel({
               >
                 {/* Main Content: Title & Description */}
                 <div className="flex group/hero-content cursor-pointer flex-col items-center sm:items-start gap-0">
-                  {slide.bannerLogo && from == "home" ? (
+                  {slide.bannerLogo ? (
                     <Image
                       src={getImageUrl(slide.bannerLogo)}
                       alt={slide.title}
@@ -739,7 +739,7 @@ export function HeroCarousel({
                         "object-contain transition-all duration-500 ease-in-out origin-left rtl:origin-right will-change-transform antialiased h-auto rounded-md",
                         from === "home"
                           ? "max-h-[80px] w-auto sm:h-[80px] xl:h-[140px] sm:max-h-[120px] 2xl:max-h-[180px] w-auto opacity-100 xl:mb-[-1rem] group-hover/hero-content:h-[200px] group-hover/hero-content:opacity-100 mb-0"
-                          : "max-h-[60px] sm:h-[80px] xl:h-[140px] sm:max-h-[100px] 2xl:max-h-[150px] w-auto opacity-100 mb-2 xl:fixed xl:top-[-350%]",
+                          : "max-h-[60px] sm:h-[80px] xl:h-[140px] sm:max-h-[100px] 2xl:max-h-[150px] w-auto opacity-100 mb-2",
                       )}
                     />
                   ) : (
