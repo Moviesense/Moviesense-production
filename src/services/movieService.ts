@@ -6,6 +6,7 @@ import {
   SearchFilters,
   SearchResponse,
   SubtitleResponse,
+  TrailerResponse,
 } from "@/types/movie";
 
 export const movieService = {
@@ -13,6 +14,10 @@ export const movieService = {
     const response = await api.get<MovieDetailResponse>(
       `/movie/${id}/detail/website`,
     );
+    return response.data;
+  },
+  getTrailers: async (movieId: string): Promise<TrailerResponse> => {
+    const response = await api.get<TrailerResponse>(`/movie/trailer/${movieId}`);
     return response.data;
   },
   getSignedUrl: async (

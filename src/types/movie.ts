@@ -167,6 +167,25 @@ export interface LanguageResponse {
   languages: Language[];
 }
 
+export interface Trailer {
+  _id: string;
+  name: string;
+  type: "trailer" | "teaser" | "clip" | string;
+  trailerImage?: string;
+  videoType: number;
+  movieId: string;
+  movieTitle?: string;
+  videoSource: "external_link" | "direct_url" | string;
+  videoUrl: string;
+  key?: string | null;
+}
+
+export interface TrailerResponse {
+  status: boolean;
+  message: string;
+  data: Trailer[];
+}
+
 export interface SearchFilters {
   search?: string;
   page?: number;

@@ -8,6 +8,7 @@ import { CastSection } from "@/components/MovieDetails/CastSection";
 import { ReviewsSection } from "@/components/MovieDetails/ReviewsSection";
 import { MovieInfoSidebar } from "@/components/MovieDetails/MovieInfoSidebar";
 import { SeasonsAndEpisodes } from "@/components/MovieDetails/Shows";
+import { TrailersSection } from "@/components/MovieDetails/TrailersSection";
 import { useMovieDetails } from "@/hooks/useMovie";
 import { Loader } from "@/components/Common/Loader";
 import { useRenewSubscription } from "@/hooks/useAuth";
@@ -43,9 +44,9 @@ export default function MovieDetailsPage({
   const { data: profilesData } = useProfiles();
   const renewSubscription = useRenewSubscription();
 
-  const [activeTab, setActiveTab] = useState<"episodes" | "more-info">(
-    "more-info",
-  );
+  const [activeTab, setActiveTab] = useState<
+    "episodes" | "more-info" | "trailors"
+  >("more-info");
 
   const movieData = movieResponse?.movie?.[0];
   const hasEpisodesData = !!(
@@ -188,7 +189,7 @@ export default function MovieDetailsPage({
       />
       {/* Tabs Navigation */}
       <div className="mx-auto px-4 sm:px-6 lg:px-10 xl:px-12 mt-6 border-b border-neutral-800">
-        <div className="flex gap-8">
+        <div className="flex gap-4 lg:gap-8">
           {hasEpisodes && (
             <button
               onClick={() => setActiveTab("episodes")}
@@ -207,6 +208,7 @@ export default function MovieDetailsPage({
               )}
             </button>
           )}
+
           <button
             onClick={() => setActiveTab("more-info")}
             className={cn(
@@ -221,6 +223,22 @@ export default function MovieDetailsPage({
               <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
             )}
           </button>
+          {movie.media_type == "movie" && (
+            <button
+              onClick={() => setActiveTab("trailors")}
+              className={cn(
+                "pb-4 text-sm xl:text-lg 2xl:text-lg font-medium transition-all relative cursor-pointer",
+                activeTab === "trailors"
+                  ? "text-white font-bold"
+                  : "text-neutral-400 hover:text-neutral-200",
+              )}
+            >
+              Trailors & More
+              {activeTab === "trailors" && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+              )}
+            </button>
+          )}
         </div>
       </div>
       <section className="mx-auto px-4 sm:px-6 lg:px-10 xl:px-12 mt-4 sm:mt-7 mb-12">
@@ -252,6 +270,10 @@ export default function MovieDetailsPage({
               {cast.length > 0 && <CastSection cast={cast} />}
               {reviews.length > 0 && <ReviewsSection reviews={reviews} />} */}
             </div>
+          )}
+
+          {activeTab === "trailors" && (
+            <TrailersSection movieId={movie._id} fallbackImage={movie.image} />
           )}
         </div>
       </section>

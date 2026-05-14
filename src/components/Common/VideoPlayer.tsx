@@ -401,6 +401,49 @@ export function VideoPlayer({
     if (!video) return;
 
     let hls: Hls | null = null;
+    const sourceUrl =
+      isAdPlaying && currentAdUrl ? currentAdUrl : currentUrl;
+    const isHlsSource = /\.m3u8(\?|#|$)/i.test(sourceUrl);
+
+    // Direct file (mp4/webm/etc.) — bypass hls.js and play natively
+    if (!isHlsSource) {
+      setQualityLevels([]);
+      setCurrentQualityIndex(-1);
+      // Drop CORS so files without ACAO headers still play.
+      video.removeAttribute("crossorigin");
+      const handleLoadedMetadata = () => {
+        const startPos =
+          isAdPlaying || resumeTime === undefined ? 0 : resumeTime;
+        video.currentTime = startPos;
+        video.playbackRate = playbackSpeed;
+        video
+          .play()
+          .then(() => setIsIntroSkipped(false))
+          .catch((err) => {
+            console.error("VideoPlayer native play() failed:", err);
+            setIsPlaying(false);
+          });
+      };
+      const handleError = () => {
+        const mediaErr = video.error;
+        console.error(
+          "VideoPlayer native source error:",
+          mediaErr?.code,
+          mediaErr?.message,
+          sourceUrl,
+        );
+      };
+      video.addEventListener("loadedmetadata", handleLoadedMetadata, {
+        once: true,
+      });
+      video.addEventListener("error", handleError);
+      video.src = sourceUrl;
+      video.load();
+      return () => {
+        video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+        video.removeEventListener("error", handleError);
+      };
+    }
 
     if (Hls.isSupported()) {
       const hlsConfig: any = {

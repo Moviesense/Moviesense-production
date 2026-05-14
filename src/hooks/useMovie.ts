@@ -16,6 +16,14 @@ export const useMovieDetails = (id: string) => {
   });
 };
 
+export const useTrailers = (movieId: string, enabled = true) => {
+  return useQuery({
+    queryKey: ["trailers", movieId],
+    queryFn: () => movieService.getTrailers(movieId),
+    enabled: !!movieId && enabled,
+  });
+};
+
 export const useToggleFavorite = () => {
   const queryClient = useQueryClient();
   return useMutation({
