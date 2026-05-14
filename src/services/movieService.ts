@@ -114,13 +114,13 @@ export const movieService = {
   },
   getGenres: async (): Promise<GenreResponse> => {
     const response = await api.get<GenreResponse>("/genre", {
-      params: { key: "gDCvgBu9U1" },
+      params: { key: "Qx7LpA2zR9" },
     });
     return response.data;
   },
   getLanguages: async (): Promise<LanguageResponse> => {
     const response = await api.get<LanguageResponse>("/language", {
-      params: { key: "gDCvgBu9U1" },
+      params: { key: "Qx7LpA2zR9" },
     });
     return response.data;
   },
@@ -145,7 +145,10 @@ export const movieService = {
     message: string;
     checkout: { sessionId: string; url: string };
   }> => {
-    const response = await api.post(`/rentedContents/mobile/request-link`, data);
+    const response = await api.post(
+      `/rentedContents/mobile/request-link`,
+      data,
+    );
     return response.data;
   },
 };

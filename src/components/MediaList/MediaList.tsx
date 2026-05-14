@@ -44,11 +44,12 @@ const highlightText = (text: string, highlight: string) => {
 };
 
 interface MediaListProps {
-  mediaType: "movie" | "tv";
+  mediaType?: "movie" | "tv";
   heading: string;
+  genre?: string;
 }
 
-export function MediaList({ mediaType, heading }: MediaListProps) {
+export function MediaList({ mediaType, heading, genre }: MediaListProps) {
   const router = useRouter();
   const { track } = useAnalytics();
   const { t } = useLanguage();
@@ -141,6 +142,7 @@ export function MediaList({ mediaType, heading }: MediaListProps) {
     useSearchMovies({
       search: debouncedValue,
       media_type: mediaType,
+      genre,
       limit: 12,
     });
 
@@ -162,8 +164,8 @@ export function MediaList({ mediaType, heading }: MediaListProps) {
     <section className="mx-auto min-h-screen flex flex-col mt-[7rem] lg:mt-20">
       <div className="flex flex-col px-4 sm:px-6 md:px-12 mt-4 sm:mt-8 gap-4 sm:gap-6">
         <div className="flex relative items-start gap-4 lg:gap-8 flex-col">
-          <h1 className="text-white text-lg sm:text-2xl font-bold ">
-            {heading}
+          <h1 className="text-white text-lg sm:text-2xl font-bold capitalize">
+            {heading.toLowerCase()}
           </h1>
           <div className="relative w-full flex flex-1">
             <span className="absolute start-4 sm:start-7 top-1/2 -translate-y-1/2 text-neutral-400">
@@ -178,9 +180,11 @@ export function MediaList({ mediaType, heading }: MediaListProps) {
               placeholder={
                 mediaType === "movie"
                   ? "Search for Movies.."
-                  : "Search for TV Shows.."
+                  : mediaType === "tv"
+                    ? "Search for TV Shows.."
+                    : `Search in ${heading.toLowerCase()}..`
               }
-              className="w-full h-12 sm:h-14 ps-12 sm:ps-22 pe-20 sm:pe-24 bg-background text-white rounded-md placeholder:text-neutral-400 focus:outline-none text-sm sm:text-base"
+              className="w-full h-12 sm:h-14 ps-12 sm:ps-22 pe-20 sm:pe-24 bg-background text-white rounded-md placeholder:text-neutral-400 focus:outline-none text-sm sm:text-base capitalize"
             />
 
             <div className="flex items-center gap-1 sm:gap-2">
@@ -218,7 +222,7 @@ export function MediaList({ mediaType, heading }: MediaListProps) {
           </div>
         ) : movies.length > 0 ? (
           <>
-            <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-1">
+            <div className="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-6 gap-1">
               <AnimatePresence mode="popLayout">
                 {movies.map((movie, i) => (
                   <motion.div

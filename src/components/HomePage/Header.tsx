@@ -32,6 +32,7 @@ import { BackgroundVideo } from "../Common/BackgroundVideo";
 import { NotificationDropdown } from "../Notifications/NotificationDropdown";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useFcmToken } from "@/hooks/useFcmToken";
+import { useGenres } from "@/hooks/useMovie";
 
 export function Header() {
   const router = useRouter();
@@ -49,7 +50,11 @@ export function Header() {
   const [activeMenu, setActiveMenu] = useState<"main" | "language">("main");
   const [isSidebarLangOpen, setIsSidebarLangOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
+  const [isMobileCategoriesOpen, setIsMobileCategoriesOpen] = useState(false);
   const notificationRef = useRef<HTMLDivElement>(null);
+  const subItemRefs = useRef<Map<string, HTMLButtonElement | null>>(new Map());
+  const { data: genresData } = useGenres();
 
   const activeProfile = profileData?.profiles?.find((p: Profile) => p.isActive);
   const renewSubscription = useRenewSubscription();
@@ -94,6 +99,18 @@ export function Header() {
       ) {
         setIsNotificationOpen(false);
       }
+      if (
+        isCategoriesOpen &&
+        !(event.target as Element).closest(".categories-dropdown")
+      ) {
+        setIsCategoriesOpen(false);
+      }
+      if (
+        isMobileCategoriesOpen &&
+        !(event.target as Element).closest(".mobile-categories-dropdown")
+      ) {
+        setIsMobileCategoriesOpen(false);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -103,7 +120,21 @@ export function Header() {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isDropdownOpen]);
+  }, [isDropdownOpen, isCategoriesOpen, isMobileCategoriesOpen]);
+
+  useEffect(() => {
+    const activeKey = pathname?.startsWith("/category")
+      ? "categories"
+      : pathname;
+    const activeEl = activeKey ? subItemRefs.current.get(activeKey) : null;
+    if (activeEl) {
+      activeEl.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+    }
+  }, [pathname]);
 
   const navItems = [
     ...(isAuthenticated
@@ -242,6 +273,61 @@ export function Header() {
                 </button>
               );
             })}
+
+            {/* Categories dropdown */}
+            <div className="relative categories-dropdown">
+              <button
+                onMouseEnter={() => setIsCategoriesOpen(true)}
+                onClick={() => setIsCategoriesOpen((prev) => !prev)}
+                className={`text-sm xl:text-md 2xl:text-base px-2 py-2 rounded-lg font-medium transition-colors text-nowrap cursor-pointer flex items-center gap-1 ${
+                  pathname?.startsWith("/category")
+                    ? "text-primary"
+                    : "text-white hover:text-primary"
+                }`}
+              >
+                {t("categories")}
+                <ChevronDown
+                  size={14}
+                  className={`transition-transform duration-300 ${
+                    isCategoriesOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {isCategoriesOpen && (
+                <div
+                  className="absolute start-0 top-full mt-2 w-56 bg-[#262d38] shadow-xl overflow-hidden z-50"
+                  onMouseLeave={() => setIsCategoriesOpen(false)}
+                >
+                  <div className="h-[3px] w-full bg-gradient-to-r from-primary to-secondary" />
+                  <div className="max-h-80 overflow-y-auto py-1 thin-scrollbar">
+                    {genresData?.genre?.length ? (
+                      genresData.genre.map((g) => {
+                        const isActive = pathname === `/category/${g._id}`;
+                        return (
+                          <button
+                            key={g._id}
+                            onClick={() => {
+                              router.push(`/category/${g._id}`);
+                              setIsCategoriesOpen(false);
+                            }}
+                            className={`w-full text-left px-4 py-2 text-sm sm:text-md 2xl:text-base capitalize transition-colors hover:bg-white/5 hover:text-primary cursor-pointer ${
+                              isActive ? "text-primary" : "text-white"
+                            }`}
+                          >
+                            {g.name?.toLowerCase()}
+                          </button>
+                        );
+                      })
+                    ) : (
+                      <div className="px-4 py-3 text-sm text-neutral-400">
+                        {t("noResults") || "No categories"}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
           </nav>
         </div>
       )}
@@ -303,23 +389,80 @@ export function Header() {
         pathname !== "/forgot-password" &&
         !pathname?.startsWith("/user/changePassword") &&
         subItems.length > 0 && (
-          <div className="flex lg:hidden w-full items-center gap-2 overflow-x-auto no-scrollbar pb-2 pt-4">
-            {subItems.map((item) => {
-              const isActive = pathname === item.path;
-              return (
-                <button
-                  key={item.name}
-                  onClick={() => router.push(item.path)}
-                  className={`text-sm font-medium px-4 py-2 rounded-md whitespace-nowrap transition-colors cursor-pointer flex-shrink-0 ${
-                    isActive
-                      ? "bg-primary text-white"
-                      : "bg-white/10 text-white hover:bg-white/10"
+          <div className="relative lg:hidden w-full mobile-categories-dropdown">
+            <div className="flex w-full items-center gap-2 overflow-x-auto no-scrollbar pb-2 pt-4">
+              {subItems.map((item) => {
+                const isActive = pathname === item.path;
+                return (
+                  <button
+                    key={item.name}
+                    ref={(el) => {
+                      subItemRefs.current.set(item.path, el);
+                    }}
+                    onClick={() => router.push(item.path)}
+                    className={`text-sm font-medium px-4 py-2 rounded-md whitespace-nowrap transition-colors cursor-pointer flex-shrink-0 ${
+                      isActive
+                        ? "bg-primary text-white"
+                        : "bg-white/10 text-white hover:bg-white/10"
+                    }`}
+                  >
+                    {item.name}
+                  </button>
+                );
+              })}
+
+              {/* Categories trigger */}
+              <button
+                ref={(el) => {
+                  subItemRefs.current.set("categories", el);
+                }}
+                onClick={() => setIsMobileCategoriesOpen((prev) => !prev)}
+                className={`text-sm font-medium px-4 py-2 rounded-md whitespace-nowrap transition-colors cursor-pointer flex-shrink-0 flex items-center gap-1 ${
+                  pathname?.startsWith("/category") || isMobileCategoriesOpen
+                    ? "bg-primary text-white"
+                    : "bg-white/10 text-white hover:bg-white/10"
+                }`}
+              >
+                {t("categories")}
+                <ChevronDown
+                  size={14}
+                  className={`transition-transform duration-300 ${
+                    isMobileCategoriesOpen ? "rotate-180" : ""
                   }`}
-                >
-                  {item.name}
-                </button>
-              );
-            })}
+                />
+              </button>
+            </div>
+
+            {isMobileCategoriesOpen && (
+              <div className="absolute start-2 end-2 top-full mt-1 bg-[#262d38] shadow-xl overflow-hidden z-50 rounded-md">
+                <div className="h-[3px] w-full bg-gradient-to-r from-primary to-secondary" />
+                <div className="max-h-72 overflow-y-auto py-1 thin-scrollbar">
+                  {genresData?.genre?.length ? (
+                    genresData.genre.map((g) => {
+                      const isActive = pathname === `/category/${g._id}`;
+                      return (
+                        <button
+                          key={g._id}
+                          onClick={() => {
+                            router.push(`/category/${g._id}`);
+                            setIsMobileCategoriesOpen(false);
+                          }}
+                          className={`w-full text-left px-4 py-2.5 text-sm capitalize transition-colors hover:bg-white/5 hover:text-primary cursor-pointer ${
+                            isActive ? "text-primary" : "text-white"
+                          }`}
+                        >
+                          {g.name.toLowerCase()}
+                        </button>
+                      );
+                    })
+                  ) : (
+                    <div className="px-4 py-3 text-sm text-neutral-400">
+                      {t("noResults") || "No categories"}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         )}
 

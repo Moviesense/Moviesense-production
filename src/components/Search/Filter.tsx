@@ -46,7 +46,6 @@ export function Filter({
 
   const MEDIA_TYPES = [
     { id: "movie", name: t("movies") },
-    { id: "series", name: t("series") },
     { id: "tv", name: t("tvShows") },
   ];
 
