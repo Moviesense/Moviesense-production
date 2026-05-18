@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Check, Loader2, Tag, X } from "lucide-react";
+import { Check, CheckCircle2, Loader2, Tag, X } from "lucide-react";
 import { Button } from "@/components/Common/Button";
 import { Input } from "@/components/Common/Input";
 import { useLanguage } from "@/context/LanguageContext";
@@ -13,6 +13,7 @@ import {
   useSubscriptionPlansByCountry,
   useValidateCoupon,
 } from "@/hooks/useSubscription";
+import { useSubscriptionStatus } from "@/hooks/useAuth";
 import type {
   ParseUrlSuccess,
   SubscriptionPlanItem,
@@ -31,6 +32,9 @@ const isFreePlan = (plan: SubscriptionPlanItem) => {
   return !Number.isNaN(price) && price === 0;
 };
 
+const toTitleCase = (s: string) =>
+  s.toLowerCase().replace(/\b\w/g, (l) => l.toUpperCase());
+
 export default function PlansView({ parsed }: Props) {
   const { t } = useLanguage();
 
@@ -42,6 +46,8 @@ export default function PlansView({ parsed }: Props) {
   } | null>(null);
 
   const plansQuery = useSubscriptionPlansByCountry(parsed.country);
+  const statusQuery = useSubscriptionStatus();
+  const activePlan = statusQuery.data?.plan ?? null;
   const validateCoupon = useValidateCoupon();
   const incrementAnalytics = useIncrementAnalytics();
   const createCheckout = useCreateCheckout();
@@ -152,16 +158,54 @@ export default function PlansView({ parsed }: Props) {
     selectedPlanId === planId &&
     (createCheckout.isPending || createFree.isPending);
 
+  const activeExpiryRaw =
+    statusQuery.data?.subscriptionExpiry || parsed.subscriptionExpiry;
+  const hasActiveSubscription = !!(
+    activeExpiryRaw && new Date(activeExpiryRaw).getTime() > Date.now()
+  );
+  const activePlanLabel =
+    activePlan?.name ||
+    (parsed.planType ? parsed.planType.replace(/_/g, " ") : null);
+  const activeExpiry = activeExpiryRaw
+    ? new Date(activeExpiryRaw).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : null;
+
   return (
     <PageWrapper>
       <div className="w-full space-y-3 text-center">
         <h1 className="text-neutral-200 text-2xl sm:text-3xl font-bold">
-          {t("subChooseYourPlan")}
+          {hasActiveSubscription
+            ? t("subUpgradeHeading") || "Upgrade your plan"
+            : t("subChooseYourPlan")}
         </h1>
         <p className="text-neutral-400 text-sm sm:text-base max-w-md mx-auto">
-          {t("subChoosePlanSub")}
+          {hasActiveSubscription
+            ? t("subUpgradeSub") ||
+              "You already have an active plan. Pick another to upgrade."
+            : t("subChoosePlanSub")}
         </p>
       </div>
+
+      {hasActiveSubscription && (
+        <div className="w-full mt-6 rounded-xl border border-primary/30 bg-primary/10 p-4 sm:p-5 flex items-start gap-3">
+          <CheckCircle2 size={22} className="text-primary shrink-0 mt-0.5" />
+          <div className="text-sm sm:text-base text-neutral-200 capitalize">
+            <p className="font-semibold">
+              {t("subCurrentPlanLabel") || "Your active plan"}
+              {activePlanLabel ? `: ${activePlanLabel.toLowerCase()}` : ""}
+            </p>
+            {activeExpiry && (
+              <p className="text-neutral-400 text-xs sm:text-sm mt-1 normal-case">
+                {t("expiresOn") || "Expires on"} {activeExpiry}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Plan grid */}
       <div className="w-full mt-8">
@@ -175,19 +219,29 @@ export default function PlansView({ parsed }: Props) {
             ))}
           </div>
         ) : plans.length === 0 ? (
-          <p className="text-neutral-400 text-center py-12">{t("subNoPlans")}</p>
+          <p className="text-neutral-400 text-center py-12">
+            {t("subNoPlans")}
+          </p>
         ) : (
           <div className="grid sm:grid-cols-2 gap-4">
-            {plans.map((plan) => (
-              <PlanCard
-                key={plan._id}
-                plan={plan}
-                discountPercent={appliedCoupon?.discountPercent ?? 0}
-                isBusy={isBusy(plan._id)}
-                disabled={createCheckout.isPending || createFree.isPending}
-                onSelect={() => handleSelectPlan(plan)}
-              />
-            ))}
+            {plans.map((plan) => {
+              const isCurrent =
+                hasActiveSubscription &&
+                !!activePlan &&
+                (plan.product_id === activePlan.product_id ||
+                  plan._id === activePlan._id);
+              return (
+                <PlanCard
+                  key={plan._id}
+                  plan={plan}
+                  discountPercent={appliedCoupon?.discountPercent ?? 0}
+                  isBusy={isBusy(plan._id)}
+                  disabled={createCheckout.isPending || createFree.isPending}
+                  isCurrent={isCurrent}
+                  onSelect={() => handleSelectPlan(plan)}
+                />
+              );
+            })}
           </div>
         )}
       </div>
@@ -205,7 +259,8 @@ export default function PlansView({ parsed }: Props) {
               <span className="font-semibold text-primary">
                 {appliedCoupon.code}
               </span>{" "}
-              — {appliedCoupon.discountPercent}% {t("subDiscount").toLowerCase()}
+              — {appliedCoupon.discountPercent}%{" "}
+              {t("subDiscount").toLowerCase()}
             </div>
             <button
               type="button"
@@ -248,6 +303,7 @@ interface PlanCardProps {
   discountPercent: number;
   isBusy: boolean;
   disabled: boolean;
+  isCurrent?: boolean;
   onSelect: () => void;
 }
 
@@ -256,6 +312,7 @@ function PlanCard({
   discountPercent,
   isBusy,
   disabled,
+  isCurrent,
   onSelect,
 }: PlanCardProps) {
   const { t } = useLanguage();
@@ -277,20 +334,36 @@ function PlanCard({
   return (
     <div
       className={
-        "relative rounded-2xl border bg-background-2 p-6 flex flex-col transition-all " +
-        (plan.most_popular
-          ? "border-primary/60 shadow-lg shadow-primary/10"
-          : "border-white/10")
+        "relative rounded-2xl border bg-background-2 p-4 sm:p-6 flex flex-col transition-all " +
+        (isCurrent
+          ? "border-primary/40 opacity-70"
+          : plan.most_popular
+            ? "border-primary/60 shadow-lg shadow-primary/10"
+            : "border-white/10")
       }
     >
-      {plan.most_popular && (
+      {plan.most_popular && !isCurrent && (
         <div className="absolute -top-3 start-4 bg-primary text-black text-xs font-bold px-3 py-1 rounded-full">
           {t("subMostPopular")}
         </div>
       )}
+      {isCurrent && (
+        <div className="absolute -top-3 start-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
+          {t("subCurrentPlan")}
+        </div>
+      )}
 
-      <h3 className="text-neutral-200 text-lg font-bold">{plan.name}</h3>
-      <p className="text-neutral-400 text-sm mb-4">{plan.heading}</p>
+      <h3 className="text-neutral-200 text-lg font-bold">
+        {toTitleCase(plan.name)}
+      </h3>
+      {plan.heading && (
+        <p className="text-neutral-400 text-sm capitalize">{plan.heading}</p>
+      )}
+      {plan.description && (
+        <p className="text-neutral-200 text-xs sm:text-sm mt-2 mb-4 line-clamp-3">
+          {plan.description}
+        </p>
+      )}
 
       <div className="flex items-baseline gap-2 mb-4">
         {free ? (
@@ -333,11 +406,11 @@ function PlanCard({
       <Button
         variant="primary"
         onClick={onSelect}
-        disabled={disabled}
+        disabled={disabled || isCurrent}
         isLoading={isBusy}
         className="w-full mt-auto"
       >
-        {t("subSelectPlan")}
+        {isCurrent ? t("subCurrentPlan") : t("subSelectPlan")}
       </Button>
     </div>
   );

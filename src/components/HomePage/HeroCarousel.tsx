@@ -74,6 +74,8 @@ interface HeroSlide {
   runtime?: number;
   introStartTime?: number;
   introEndTime?: number;
+  contentRating?: string;
+  year?: string;
   signature?: string;
   bannerLogo?: string;
   drmLicenseToken?: string;
@@ -754,6 +756,21 @@ export function HeroCarousel({
                       {slide.title}
                     </h1>
                   )}
+                  {from == "movie" &&
+                    (() => {
+                      const runtime = formatRuntime(slide.runtime);
+                      const meta = [
+                        slide.contentRating ? `[${slide.contentRating}]` : null,
+                        slide.year || null,
+                        runtime || null,
+                      ].filter(Boolean);
+                      if (meta.length === 0) return null;
+                      return (
+                        <p className="text-white mt-1 transition-all duration-500 font-semibold ease-in-out origin-left rtl:origin-right will-change-transform antialiased text-xs sm:text-lg text-center sm:text-start">
+                          {meta.join(" | ")}
+                        </p>
+                      );
+                    })()}
 
                   {from == "home" && (
                     <div

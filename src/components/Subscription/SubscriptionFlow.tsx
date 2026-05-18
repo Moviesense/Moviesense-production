@@ -2,26 +2,25 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Loader2, CheckCircle2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import {
   useParseSubscriptionToken,
   useMarkRenewTokenUsed,
 } from "@/hooks/useSubscription";
 import { useLanguage } from "@/context/LanguageContext";
 import { toast } from "@/context/ToastContext";
-import { Button } from "@/components/Common/Button";
 import type { ParseUrlSuccess } from "@/types/subscription";
 import PlansView from "./PlansView";
 import CreatePasswordView from "./CreatePasswordView";
 import InvalidTokenView from "./InvalidTokenView";
 import { useAuth } from "@/context/AuthContext";
+import { BackButton } from "../Common/BackButton";
 
 type Step =
   | "loading"
   | "invalid"
   | "plans"
   | "createPassword"
-  | "alreadyDone"
   | "paymentProcessing";
 
 interface Props {
@@ -29,8 +28,12 @@ interface Props {
 }
 
 export const PageWrapper = ({ children }: { children: React.ReactNode }) => (
-  <div className="min-h-[100vh] flex flex-col px-4 sm:px-6 lg:px-8 items-center justify-center py-20">
-    <div className="flex flex-col items-center w-full p-5 sm:p-10 max-w-3xl mx-auto bg-background rounded-2xl">
+  <div className="min-h-[100vh] flex flex-col px-3 sm:px-6 lg:px-8 items-center justify-center p-0">
+    <BackButton
+      onClick={() => window.history.back()}
+      className="absolute top-4 left-4 sm:top-6 sm:left-8"
+    />
+    <div className="flex flex-col items-center w-full p-5 sm:p-10 max-w-3xl mx-auto sm:bg-background rounded-2xl">
       {children}
     </div>
   </div>
@@ -90,13 +93,16 @@ export default function SubscriptionFlow({ token }: Props) {
     if (isLoading || (isFetching && !data)) return "loading";
     if (isError) return "invalid";
     if (!data || !data.valid) return "invalid";
-    if (parsed?.passwordCreated && hasActiveSubscription) return "alreadyDone";
     // Payment just succeeded — always advance to create-password, even if the
     // refetched parse-url hasn't yet reflected the new subscription state.
     if (paymentStatus === "success" && !parsed?.passwordCreated) {
       return "createPassword";
     }
-    if (hasActiveSubscription) return "createPassword";
+    // Active subscription without a password yet — finish account setup.
+    if (hasActiveSubscription && !parsed?.passwordCreated) {
+      return "createPassword";
+    }
+    // Everyone else (incl. existing subscribers wanting to upgrade) sees plans.
     return "plans";
   }, [
     isLoading,
@@ -119,27 +125,6 @@ export default function SubscriptionFlow({ token }: Props) {
 
   if (step === "invalid") {
     return <InvalidTokenView />;
-  }
-
-  if (step === "alreadyDone") {
-    return (
-      <PageWrapper>
-        <CheckCircle2 className="w-16 h-16 text-green-500 mb-4" />
-        <h2 className="text-xl sm:text-3xl font-bold text-neutral-200 mb-2 text-center">
-          {t("subAlreadyDone")}
-        </h2>
-        <p className="text-neutral-400 mb-6 text-center">
-          {t("subAlreadyDoneSub")}
-        </p>
-        <Button
-          variant="primary"
-          className="w-full sm:w-90 mx-auto"
-          onClick={() => router.push("/login")}
-        >
-          {t("subGoToLogin")}
-        </Button>
-      </PageWrapper>
-    );
   }
 
   if (step === "createPassword" && parsed && !isAuthenticated) {

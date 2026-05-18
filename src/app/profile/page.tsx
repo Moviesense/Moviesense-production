@@ -24,7 +24,7 @@ import { userService } from "@/services/userService";
 import { BackButton } from "@/components/Common/BackButton";
 import { SubscriptionStatus } from "@/types/user";
 import { Button } from "@/components/Common/Button";
-import { useRenewSubscription, useSubscriptionPlans } from "@/hooks/useAuth";
+import { useRenewSubscription } from "@/hooks/useAuth";
 import { useSupportLinks } from "@/hooks/useSupportLinks";
 import { useProfiles } from "@/hooks/useProfile";
 import { toast } from "@/context/ToastContext";
@@ -67,7 +67,30 @@ export default function ProfilePage() {
   const { data: profilesData } = useProfiles();
   const { data: supportLinks } = useSupportLinks();
   const renewSubscription = useRenewSubscription();
-  const subscriptionPlans = useSubscriptionPlans();
+
+  const handleViewPackages = async () => {
+    track(AnalyticsEventType.updateSubscriptionByProfile);
+    const email = userEmail;
+    if (!email) {
+      toast("User email not found. Please log in again.", "error");
+      return;
+    }
+    try {
+      const country = await getCountry();
+      const response = await renewSubscription.mutateAsync({
+        email,
+        country,
+        view: true,
+      });
+      if (response.status && response.token) {
+        router.push(`/subscription/${response.token}`);
+      } else {
+        toast(response.message || "Failed to get renewal link.", "error");
+      }
+    } catch (error) {
+      console.error("Renewal error:", error);
+    }
+  };
 
   const handleUpgradePlan = async () => {
     track(AnalyticsEventType.updateSubscriptionByProfile);
@@ -82,33 +105,6 @@ export default function ProfilePage() {
       const response = await renewSubscription.mutateAsync({
         email,
         country: country,
-      });
-
-      if (response.status && response.token) {
-        router.push(`/subscription/${response.token}`);
-      } else {
-        toast(response.message || "Failed to get renewal link.", "error");
-      }
-    } catch (error) {
-      console.error("Renewal error:", error);
-    }
-  };
-
-  const handleViewPackages = async () => {
-    track(AnalyticsEventType.updateSubscriptionByProfile);
-
-    const email = userEmail;
-    if (!email) {
-      toast("User email not found. Please log in again.", "error");
-      return;
-    }
-
-    try {
-      const country = await getCountry();
-      const response = await renewSubscription.mutateAsync({
-        email,
-        country: country,
-        view: true,
       });
 
       if (response.status && response.token) {
@@ -381,7 +377,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="relative min-h-screen text-white overflow-hidden font-manrope">
+    <div className="relative min-h-screen text-white overflow-hidden font-manrope mt-12 sm:mt-0">
       {/* BACKGROUND GRADIENT */}
       {/* <div className="absolute inset-0 bg-gradient-to-b from-teal-500/10 via-teal-800/5 to-neutral-900 pointer-events-none" /> */}
       {/* <BackgroundVideo /> */}
@@ -444,7 +440,7 @@ export default function ProfilePage() {
                 variant="custom"
                 onClick={handleViewPackages}
                 className="flex justify-between items-center rounded-md h-12 sm:h-16 mx-auto w-[95%] 2xl:text-lg px-6 bg-gradient-to-r from-[#3b1740] to-[#164c64] text-white shadow-md transition-all hover:opacity-90"
-                isLoading={subscriptionPlans.isPending}
+                isLoading={renewSubscription.isPending}
                 rightIcon={
                   <ChevronRight
                     size={24}

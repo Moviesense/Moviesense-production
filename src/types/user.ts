@@ -1,3 +1,5 @@
+import type { SubscriptionPlanItem } from "./subscription";
+
 export interface SubscriptionPlan {
   _id: string;
   name: string;
@@ -25,4 +27,5 @@ export interface SubscriptionStatusResponse {
   subscriptionExpiry?: string;
   remainingMinutes?: number;
   subscription?: SubscriptionStatus | null;
+  plan?: SubscriptionPlanItem | null;
 }

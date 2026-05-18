@@ -191,7 +191,7 @@ export function MovieRow({
                   e.stopPropagation();
                   scrollToPage(index);
                 }}
-                className={`h-1 w-4 sm:w-6 rounded-full cursor-pointer transition-all border-none shadow-none p-0 ${
+                className={`h-[2px] sm:h-1 w-3 sm:w-6 rounded-full cursor-pointer transition-all border-none shadow-none p-0 ${
                   currentPage === index ? "bg-primary" : "bg-white/40"
                 }`}
               />
@@ -282,11 +282,11 @@ export function MovieRow({
         {/* LEFT ARROW */}
         <button
           onClick={() => scroll("left")}
-          className={`hidden xl:block absolute top-0 bottom-0 start-0 z-[60] w-12 xl:h-[92%] flex items-center justify-center bg-black/70 transition-opacity duration-300 hover:bg-black/80 cursor-pointer rounded-se-lg rounded-ee-lg ${
+          className={`hidden xl:block absolute top-0 bottom-0 start-0 z-[60] w-12  flex items-center justify-center bg-black/70 transition-opacity duration-300 hover:bg-black/80 cursor-pointer rounded-se-lg rounded-ee-lg ${
             isHovered && (isRTL ? canScrollRight : canScrollLeft)
               ? "opacity-100"
               : "opacity-0 pointer-events-none"
-          }`}
+          } ${widgetType === 4 ? "xl:h-[92%]" : "xl:h-[82%]"}`}
         >
           {isRTL ? (
             <ChevronRight className="w-8 h-8 text-white" />
@@ -298,11 +298,11 @@ export function MovieRow({
         {/* RIGHT ARROW */}
         <button
           onClick={() => scroll("right")}
-          className={`hidden xl:block absolute top-0 bottom-0 end-0 z-[60] w-12 xl:h-[92%] flex items-center justify-center bg-black/70 transition-opacity duration-300 hover:bg-black/80 cursor-pointer rounded-ss-lg rounded-es-lg ${
+          className={`hidden xl:block absolute top-0 bottom-0 end-0 z-[60] w-12 flex items-center justify-center bg-black/70 transition-opacity duration-300 hover:bg-black/80 cursor-pointer rounded-ss-lg rounded-es-lg ${
             isHovered && (isRTL ? canScrollLeft : canScrollRight)
               ? "opacity-100"
               : "opacity-0 pointer-events-none"
-          }`}
+          } ${widgetType === 4 ? "xl:h-[92%]" : "xl:h-[82%]"}`}
         >
           {isRTL ? (
             <ChevronLeft className="w-8 h-8 text-white" />

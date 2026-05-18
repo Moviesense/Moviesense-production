@@ -5,6 +5,7 @@ import {
   MovieDetailResponse,
   SearchFilters,
   SearchResponse,
+  RoleResponse,
   SubtitleResponse,
   TrailerResponse,
 } from "@/types/movie";
@@ -17,7 +18,16 @@ export const movieService = {
     return response.data;
   },
   getTrailers: async (movieId: string): Promise<TrailerResponse> => {
-    const response = await api.get<TrailerResponse>(`/movie/trailer/${movieId}`);
+    const response = await api.get<TrailerResponse>(
+      `/movie/trailer/${movieId}`,
+    );
+    return response.data;
+  },
+  getCast: async (movieId: string): Promise<RoleResponse> => {
+    const response = await api.get<RoleResponse>("/role/movieIdWise", {
+      params: { movieId },
+      headers: { key: process.env.NEXT_PUBLIC_SECRET_KEY },
+    });
     return response.data;
   },
   getSignedUrl: async (

@@ -9,6 +9,7 @@ import { ReviewsSection } from "@/components/MovieDetails/ReviewsSection";
 import { MovieInfoSidebar } from "@/components/MovieDetails/MovieInfoSidebar";
 import { SeasonsAndEpisodes } from "@/components/MovieDetails/Shows";
 import { TrailersSection } from "@/components/MovieDetails/TrailersSection";
+import { CastTab } from "@/components/MovieDetails/CastTab";
 import { useMovieDetails } from "@/hooks/useMovie";
 import { Loader } from "@/components/Common/Loader";
 import { useRenewSubscription } from "@/hooks/useAuth";
@@ -124,6 +125,7 @@ export default function MovieDetailsPage({
       bannerLogo: movie.bannerLogo,
       episodes: movie.episode,
       totalLikes: movie.totalLikes,
+      runtime: movie.runtime,
       likeStatus: movie.likeStatus,
       isFavorite: movie.isFavorite,
       isRented: movie.isRented,
@@ -132,6 +134,8 @@ export default function MovieDetailsPage({
       clicksLeft: movie.clicksLeft,
       customAd: movie.customAd,
       adDetails: movie.adDetails,
+      contentRating: movie.contentRating,
+      year: movie.year,
       GoogleAd: movie.GoogleAd,
     },
   ];
@@ -267,6 +271,7 @@ export default function MovieDetailsPage({
                 director={movie.director}
                 music={movie.music}
               />
+              <CastTab movieId={movie._id} />
               {cast.length > 0 && <CastSection cast={cast} />}
               {reviews.length > 0 && <ReviewsSection reviews={reviews} />}
             </div>

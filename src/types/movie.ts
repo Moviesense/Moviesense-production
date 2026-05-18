@@ -101,6 +101,7 @@ export interface MovieDetail {
   expiryDate?: string;
   clicksLeft?: number;
   totalLikes?: number;
+  runtime?: string;
   likeStatus?: boolean;
   isFavorite?: boolean;
   GoogleAd?: boolean;
@@ -165,6 +166,27 @@ export interface LanguageResponse {
   status: boolean;
   message: string;
   languages: Language[];
+}
+
+export interface Role {
+  _id: string;
+  name: string;
+  position?: string;
+  image?: string;
+  updateType?: number;
+  movie?: {
+    _id?: string;
+    id?: string;
+    title?: string;
+  };
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface RoleResponse {
+  status: boolean;
+  message: string;
+  role: Role[];
 }
 
 export interface Trailer {
