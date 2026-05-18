@@ -14,6 +14,7 @@ import {
   CreatePasswordResponse,
   RenewTokenStatusResponse,
   RenewTokenMarkResponse,
+  CancelSubscriptionResponse,
 } from "@/types/subscription";
 import axios from "axios";
 
@@ -90,6 +91,14 @@ export const subscriptionService = {
     const res = await api.post<RenewTokenStatusResponse>(
       "/subscription/check-renew-token-used",
       { token },
+    );
+    return res.data;
+  },
+
+  cancelSubscription: async (): Promise<CancelSubscriptionResponse> => {
+    const res = await api.post<CancelSubscriptionResponse>(
+      "/subscription/cancel",
+      {},
     );
     return res.data;
   },

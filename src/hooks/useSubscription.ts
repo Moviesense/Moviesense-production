@@ -75,3 +75,9 @@ export const useMarkRenewTokenUsed = () => {
       subscriptionService.markRenewTokenUsed(token),
   });
 };
+
+export const useCancelSubscription = () => {
+  return useMutation({
+    mutationFn: () => subscriptionService.cancelSubscription(),
+  });
+};

@@ -7,6 +7,7 @@ import { Input } from "@/components/Common/Input";
 import { useLanguage } from "@/context/LanguageContext";
 import { toast } from "@/context/ToastContext";
 import {
+  useCancelSubscription,
   useCreateCheckout,
   useCreateFreeSubscription,
   useIncrementAnalytics,
@@ -52,6 +53,22 @@ export default function PlansView({ parsed }: Props) {
   const incrementAnalytics = useIncrementAnalytics();
   const createCheckout = useCreateCheckout();
   const createFree = useCreateFreeSubscription();
+  const cancelSubscription = useCancelSubscription();
+
+  const handleCancelSubscription = () => {
+    cancelSubscription.mutate(undefined, {
+      onSuccess: (res) => {
+        if (res.status && res.link) {
+          window.location.href = res.link;
+        } else {
+          toast(res.message || t("subPaymentCancelled"), "error");
+        }
+      },
+      onError: () => {
+        toast(t("subPaymentCancelled"), "error");
+      },
+    });
+  };
 
   // Increment view count once.
   useEffect(() => {
@@ -191,19 +208,29 @@ export default function PlansView({ parsed }: Props) {
       </div>
 
       {hasActiveSubscription && (
-        <div className="w-full mt-6 rounded-xl border border-primary/30 bg-primary/10 p-4 sm:p-5 flex items-start gap-3">
-          <CheckCircle2 size={22} className="text-primary shrink-0 mt-0.5" />
-          <div className="text-sm sm:text-base text-neutral-200 capitalize">
-            <p className="font-semibold">
-              {t("subCurrentPlanLabel") || "Your active plan"}
-              {activePlanLabel ? `: ${activePlanLabel.toLowerCase()}` : ""}
-            </p>
-            {activeExpiry && (
-              <p className="text-neutral-400 text-xs sm:text-sm mt-1 normal-case">
-                {t("expiresOn") || "Expires on"} {activeExpiry}
+        <div className="w-full mt-6 rounded-xl border border-primary/30 bg-primary/10 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+          <div className="flex items-start gap-3 flex-1">
+            <CheckCircle2 size={22} className="text-primary shrink-0 mt-0.5" />
+            <div className="text-sm sm:text-base text-neutral-200 capitalize">
+              <p className="font-semibold">
+                {t("subCurrentPlanLabel") || "Your active plan"}
+                {activePlanLabel ? `: ${activePlanLabel.toLowerCase()}` : ""}
               </p>
-            )}
+              {activeExpiry && (
+                <p className="text-neutral-400 text-xs sm:text-sm mt-1 normal-case">
+                  {t("expiresOn") || "Expires on"} {activeExpiry}
+                </p>
+              )}
+            </div>
           </div>
+          <Button
+            variant="outline"
+            onClick={handleCancelSubscription}
+            isLoading={cancelSubscription.isPending}
+            className="border border-red-500/60 text-red-400 hover:bg-red-500/10 rounded-full px-5 h-10 self-stretch sm:self-auto"
+          >
+            {t("cancelSubscription")}
+          </Button>
         </div>
       )}
 

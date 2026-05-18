@@ -36,6 +36,8 @@ export function DynamicHeroCarousel() {
       type: item.movie?.type,
       bannerLogo: item.movie?.bannerLogo,
       runtime: item.movie?.runtime,
+      year: item.movie?.year,
+      contentRating: item.movie?.contentRating,
       signedVideoUrl: item.signedVideoUrl,
       genres: item.genres || item.movie?.genre,
       firstEpisode: item.movie?.firstEpisode || item.movie?.episode?.[0],

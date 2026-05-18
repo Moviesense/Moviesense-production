@@ -756,21 +756,22 @@ export function HeroCarousel({
                       {slide.title}
                     </h1>
                   )}
-                  {from == "movie" &&
-                    (() => {
-                      const runtime = formatRuntime(slide.runtime);
-                      const meta = [
-                        slide.contentRating ? `[${slide.contentRating}]` : null,
-                        slide.year || null,
-                        runtime || null,
-                      ].filter(Boolean);
-                      if (meta.length === 0) return null;
-                      return (
-                        <p className="text-white mt-1 transition-all duration-500 font-semibold ease-in-out origin-left rtl:origin-right will-change-transform antialiased text-xs sm:text-lg text-center sm:text-start">
-                          {meta.join(" | ")}
-                        </p>
-                      );
-                    })()}
+                  {(() => {
+                    const runtime = formatRuntime(slide.runtime);
+                    const meta = [
+                      slide.contentRating ? `[${slide.contentRating}]` : null,
+                      slide.year || null,
+                      runtime || null,
+                    ].filter(Boolean);
+                    if (meta.length === 0) return null;
+                    return (
+                      <p
+                        className={`text-white transition-all duration-500 font-semibold ease-in-out origin-left rtl:origin-right will-change-transform antialiased text-xs sm:text-lg text-center sm:text-start ${from == "movie" ? "mt-1" : "mt-2 sm:mt-4"}`}
+                      >
+                        {meta.join(" | ")}
+                      </p>
+                    );
+                  })()}
 
                   {from == "home" && (
                     <div

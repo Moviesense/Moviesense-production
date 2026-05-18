@@ -120,6 +120,14 @@ export interface CreatePasswordResponse {
   message: string;
 }
 
+export interface CancelSubscriptionResponse {
+  status: boolean;
+  message?: string;
+  email?: string;
+  token?: string;
+  link?: string;
+}
+
 export interface RenewTokenStatusResponse {
   status: boolean;
   used: boolean;
