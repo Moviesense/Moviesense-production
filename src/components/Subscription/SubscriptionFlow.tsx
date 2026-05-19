@@ -30,10 +30,10 @@ interface Props {
 export const PageWrapper = ({ children }: { children: React.ReactNode }) => (
   <div className="min-h-[100vh] flex flex-col px-3 sm:px-6 lg:px-8 items-center justify-center p-0">
     <BackButton
-      onClick={() => window.history.back()}
+      onClick={() => location.replace("/home")}
       className="absolute top-4 left-4 sm:top-6 sm:left-8"
     />
-    <div className="flex flex-col items-center w-full p-5 sm:p-10 max-w-3xl mx-auto sm:bg-background rounded-2xl">
+    <div className="flex flex-col items-center w-full p-5 sm:p-10 max-w-5xl mx-auto sm:bg-background rounded-2xl">
       {children}
     </div>
   </div>

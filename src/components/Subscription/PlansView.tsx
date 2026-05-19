@@ -237,7 +237,7 @@ export default function PlansView({ parsed }: Props) {
       {/* Plan grid */}
       <div className="w-full mt-8">
         {plansQuery.isLoading ? (
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-3 gap-4">
             {[0, 1].map((i) => (
               <div
                 key={i}
@@ -250,14 +250,15 @@ export default function PlansView({ parsed }: Props) {
             {t("subNoPlans")}
           </p>
         ) : (
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-3 gap-4">
             {plans.map((plan) => {
               const matchesActivePlan =
                 !!activePlan &&
                 (plan.product_id === activePlan.product_id ||
                   plan._id === activePlan._id);
               const isCurrent =
-                matchesActivePlan && (isFreePlan(plan) || hasActiveSubscription);
+                matchesActivePlan &&
+                (isFreePlan(plan) || hasActiveSubscription);
               return (
                 <PlanCard
                   key={plan._id}

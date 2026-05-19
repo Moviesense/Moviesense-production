@@ -27,6 +27,8 @@ import { IconButton } from "@/components/Common/IconButton";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { AnalyticsEventType } from "@/types/analytics";
 import { BackgroundVideo } from "@/components/Common/BackgroundVideo";
+import { Views } from "@/components/Common/Views";
+import { formatYear } from "@/lib/utils";
 
 const MEDIA_TYPES = [
   { id: "movie", name: "Movies" },
@@ -362,7 +364,9 @@ export default function SearchInput() {
       />
       <div className="px-4 sm:px-6 md:px-12 mb-12 mt-10 sm:mt-18 flex-grow">
         {isLoading ? (
-          <Loader />
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-10 h-10 animate-spin text-primary" />
+          </div>
         ) : // <div className="flex gap-1 overflow-hidden mt-4">
         //   {Array(5)
         //     .fill(0)
@@ -375,7 +379,7 @@ export default function SearchInput() {
         // </div>
         movies.length > 0 ? (
           <>
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1">
+            <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-1">
               <AnimatePresence mode="popLayout">
                 {movies.map((movie, i) => (
                   <motion.div
@@ -413,33 +417,41 @@ export default function SearchInput() {
                       onLeave={handleLeave}
                       footer={
                         <>
-                          <div className="p-1 px-2 sm:p-3 sm:px-4 flex items-center justify-between absolute bottom-0 left-0 right-0 ">
-                            <div className="flex items-center gap-2 ml-auto">
-                              {/* {isPlayLoading === item._id ? (
-                                <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 text-primary animate-spin" />
-                              ) : ( */}
-                              <IconButton
-                                className="w-6 h-6 sm:w-7 sm:h-7"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  const url = `/movie/${movie._id}?play=true${movie.firstEpisode?._id ? `&episodeId=${movie.firstEpisode._id}` : ""}`;
-                                  router.push(url);
-                                }}
-                              >
-                                <Play
-                                  size={14}
-                                  className="text-white fill-white"
+                          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none " />
+                          <div className="absolute inset-x-0 bottom-0 p-2 sm:p-3 flex items-end justify-between gap-2">
+                            <div className="min-w-0 flex-1">
+                              <p className="text-white text-xs sm:text-sm font-semibold line-clamp-1">
+                                {highlightText(movie.title, debouncedValue)}
+                              </p>
+                              <div className="flex items-center gap-1 sm:gap-2 mt-1">
+                                <Views
+                                  view={movie.view}
+                                  className="text-neutral-300 text-[10px] sm:text-xs"
                                 />
-                              </IconButton>
-                              {/* )} */}
+                                {formatYear(movie.year) && (
+                                  <>
+                                    <div className="w-1.5 h-1.5 mx-.8 bg-primary rounded-full"></div>
+                                    <p className="text-neutral-300 text-[10px] sm:text-xs">
+                                      {formatYear(movie.year)}
+                                    </p>
+                                  </>
+                                )}
+                              </div>
                             </div>
+                            {/* <IconButton
+                                                       className="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0"
+                                                       onClick={(e) => {
+                                                         e.stopPropagation();
+                                                         const url = `/movie/${movie._id}?play=true${movie.firstEpisode?._id ? `&episodeId=${movie.firstEpisode._id}` : ""}`;
+                                                         router.push(url);
+                                                       }}
+                                                     >
+                                                       <Play
+                                                         size={14}
+                                                         className="text-white fill-white"
+                                                       />
+                                                     </IconButton> */}
                           </div>
-                          <span className="p-1 sm:p-2 text-xs sm:text-sm font-medium text-neutral-300 bg-background text-nowrap overflow-hidden">
-                            {highlightText(movie.title, debouncedValue)}
-                            {/* {movie.title.length < 14
-                            ? movie.title
-                            : movie.title.slice(0, 15) + ".."} */}
-                          </span>
                         </>
                       }
                     />

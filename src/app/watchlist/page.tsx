@@ -104,7 +104,7 @@ export default function WatchlistPage() {
           </div>
         ) : data?.pages && data.pages.length > 0 ? (
           <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-1 mt-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-1 mt-8">
               <AnimatePresence mode="popLayout">
                 {data.pages
                   .flatMap((page) => page.favorites)

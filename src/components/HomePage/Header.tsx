@@ -241,7 +241,7 @@ export function Header() {
           </div>
         </div>
       ) : (
-        <div className="hidden lg:flex items-center gap-4">
+        <div className="hidden xl:flex items-center gap-4">
           <div
             className="flex items-center gap-4 cursor-pointer px-4 pr-1 py-3"
             onClick={handleProfileClick}
@@ -337,7 +337,7 @@ export function Header() {
         pathname !== "/signup" &&
         pathname !== "/forgot-password" &&
         !pathname?.startsWith("/user/changePassword") && (
-          <div className="flex lg:hidden items-center justify-between w-full py-2">
+          <div className="flex xl:hidden items-center justify-between w-full py-2">
             <button className="text-white" onClick={() => setIsMenuOpen(true)}>
               <Menu size={28} />
             </button>
@@ -389,8 +389,8 @@ export function Header() {
         pathname !== "/forgot-password" &&
         !pathname?.startsWith("/user/changePassword") &&
         subItems.length > 0 && (
-          <div className="relative lg:hidden w-full mobile-categories-dropdown">
-            <div className="flex w-full justify-between items-center gap-2 overflow-x-auto no-scrollbar pb-2 pt-4">
+          <div className="relative xl:hidden w-full mobile-categories-dropdown">
+            <div className="flex w-full justify-between sm:justify-start items-center gap-2 overflow-x-auto no-scrollbar pb-2 pt-4">
               {subItems.map((item) => {
                 const isActive = pathname === item.path;
                 return (
@@ -516,7 +516,7 @@ export function Header() {
             )}
           </div>
         ) : (
-          <div className="hidden lg:flex items-center gap-6">
+          <div className="hidden xl:flex items-center gap-6">
             <Search
               className="cursor-pointer text-white hover:text-white"
               size={22}
@@ -530,7 +530,6 @@ export function Header() {
                     className="cursor-pointer text-white hover:text-primary transition-colors"
                     size={22}
                     onClick={() => setIsNotificationOpen(!isNotificationOpen)}
-                    onMouseEnter={() => setIsNotificationOpen(true)}
                   />
                   {hasUnread && (
                     <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-[#1f252e] pointer-events-none" />

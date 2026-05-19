@@ -28,9 +28,12 @@ export const subscriptionService = {
   },
 
   getPlans: async (country: string): Promise<PlansResponse> => {
-    const res = await api.get<PlansResponse>("/subscription/plans", {
-      params: { country },
-    });
+    const res = await api.get<PlansResponse>(
+      "/subscription/plans?status=active",
+      {
+        params: { country },
+      },
+    );
     return res.data;
   },
 

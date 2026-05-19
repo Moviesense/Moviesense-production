@@ -134,3 +134,9 @@ export async function handleShare(title: string, id: string | number) {
     return false;
   }
 }
+
+export const formatYear = (year: any) => {
+  if (!year) return null;
+  const parsed = new Date(year).getFullYear();
+  return Number.isFinite(parsed) ? parsed : year;
+};

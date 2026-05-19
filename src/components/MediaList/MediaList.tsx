@@ -14,6 +14,7 @@ import { IconButton } from "@/components/Common/IconButton";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { AnalyticsEventType } from "@/types/analytics";
 import { Views } from "../Common/Views";
+import { formatYear } from "@/lib/utils";
 
 declare global {
   interface Window {
@@ -154,15 +155,9 @@ export function MediaList({ mediaType, heading, genre }: MediaListProps) {
 
   const movies = data?.pages.flatMap((page) => page.data) || [];
 
-  const formatYear = (year: any) => {
-    if (!year) return null;
-    const parsed = new Date(year).getFullYear();
-    return Number.isFinite(parsed) ? parsed : year;
-  };
-
   return (
     <section className="mx-auto min-h-screen flex flex-col mt-[7rem] lg:mt-20">
-      <div className="flex flex-col px-4 sm:px-6 md:px-12 mt-4 sm:mt-8 gap-4 sm:gap-6">
+      <div className="flex flex-col px-4 sm:px-6 md:px-12 mt-4 sm:mt-12 gap-4 sm:gap-6">
         <div className="flex relative items-start gap-4 lg:gap-8 flex-col">
           <h1 className="text-white text-lg sm:text-2xl font-bold capitalize">
             {heading.toLowerCase()}
@@ -222,7 +217,7 @@ export function MediaList({ mediaType, heading, genre }: MediaListProps) {
           </div>
         ) : movies.length > 0 ? (
           <>
-            <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-7 gap-1">
+            <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-1">
               <AnimatePresence mode="popLayout">
                 {movies.map((movie, i) => (
                   <motion.div
@@ -251,7 +246,6 @@ export function MediaList({ mediaType, heading, genre }: MediaListProps) {
                       mediaType={movie.media_type || movie.type}
                       totalLikes={movie.totalLikes}
                       likeStatus={movie.likeStatus}
-                      widgetType={0}
                       isFavorite={movie.isFavorite}
                       className="rounded-md"
                       footer={
