@@ -128,6 +128,16 @@ export interface CancelSubscriptionResponse {
   link?: string;
 }
 
+export interface CreateCancelPortalSessionRequest {
+  token: string;
+}
+
+export interface CreateCancelPortalSessionResponse {
+  status: boolean;
+  message?: string;
+  url?: string;
+}
+
 export interface RenewTokenStatusResponse {
   status: boolean;
   used: boolean;

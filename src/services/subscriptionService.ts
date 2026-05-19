@@ -15,6 +15,8 @@ import {
   RenewTokenStatusResponse,
   RenewTokenMarkResponse,
   CancelSubscriptionResponse,
+  CreateCancelPortalSessionRequest,
+  CreateCancelPortalSessionResponse,
 } from "@/types/subscription";
 import axios from "axios";
 
@@ -102,6 +104,16 @@ export const subscriptionService = {
     const res = await api.post<CancelSubscriptionResponse>(
       "/subscription/cancel",
       {},
+    );
+    return res.data;
+  },
+
+  createCancelPortalSession: async (
+    data: CreateCancelPortalSessionRequest,
+  ): Promise<CreateCancelPortalSessionResponse> => {
+    const res = await api.post<CreateCancelPortalSessionResponse>(
+      "/subscription/create-cancel-portal-session",
+      data,
     );
     return res.data;
   },

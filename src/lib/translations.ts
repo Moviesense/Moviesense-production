@@ -226,6 +226,16 @@ const en = {
   subAlreadyDone: "All set",
   subAlreadyDoneSub: "Your subscription and account are already active.",
   subSaveAmount: "Save",
+  subCancelConfirmTitle: "Cancel your subscription?",
+  subCancelConfirmSub:
+    "We're sorry to see you go. Here's what happens if you cancel:",
+  subCancelInfo1: "You'll keep access until your current billing period ends.",
+  subCancelInfo2: "Your saved watchlist and preferences stay with you.",
+  subCancelInfo3: "You can resubscribe anytime — your account stays active.",
+  subKeepMyPlan: "Keep my plan",
+  subYesCancel: "Yes, cancel subscription",
+  subRedirectingPortal: "Redirecting to the cancellation portal...",
+  subCancelPortalError: "Couldn't open the cancellation portal. Please try again.",
 };
 
 const ar: typeof en = {
@@ -457,6 +467,15 @@ const ar: typeof en = {
   subAlreadyDone: "كل شيء جاهز",
   subAlreadyDoneSub: "اشتراكك وحسابك مفعّلان بالفعل.",
   subSaveAmount: "وفّر",
+  subCancelConfirmTitle: "هل تريد إلغاء اشتراكك؟",
+  subCancelConfirmSub: "نأسف لرحيلك. إليك ما سيحدث إذا قمت بالإلغاء:",
+  subCancelInfo1: "ستحتفظ بالوصول حتى نهاية دورة الفوترة الحالية.",
+  subCancelInfo2: "ستبقى قائمة المشاهدة والإعدادات المحفوظة معك.",
+  subCancelInfo3: "يمكنك إعادة الاشتراك في أي وقت — يظل حسابك نشطًا.",
+  subKeepMyPlan: "الاحتفاظ بالباقة",
+  subYesCancel: "نعم، إلغاء الاشتراك",
+  subRedirectingPortal: "جارٍ التحويل إلى بوابة الإلغاء...",
+  subCancelPortalError: "تعذّر فتح بوابة الإلغاء. يُرجى المحاولة مرة أخرى.",
 };
 
 export const translations = { en, ar };

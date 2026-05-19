@@ -81,3 +81,10 @@ export const useCancelSubscription = () => {
     mutationFn: () => subscriptionService.cancelSubscription(),
   });
 };
+
+export const useCreateCancelPortalSession = () => {
+  return useMutation({
+    mutationFn: (token: string) =>
+      subscriptionService.createCancelPortalSession({ token }),
+  });
+};

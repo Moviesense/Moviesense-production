@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Check, CheckCircle2, Loader2, Tag, X } from "lucide-react";
 import { Button } from "@/components/Common/Button";
 import { Input } from "@/components/Common/Input";
 import { useLanguage } from "@/context/LanguageContext";
 import { toast } from "@/context/ToastContext";
 import {
-  useCancelSubscription,
   useCreateCheckout,
   useCreateFreeSubscription,
   useIncrementAnalytics,
@@ -46,6 +46,7 @@ export default function PlansView({ parsed }: Props) {
     discountPercent: number;
   } | null>(null);
 
+  const router = useRouter();
   const plansQuery = useSubscriptionPlansByCountry(parsed.country);
   const statusQuery = useSubscriptionStatus();
   const activePlan = statusQuery.data?.plan ?? null;
@@ -53,21 +54,9 @@ export default function PlansView({ parsed }: Props) {
   const incrementAnalytics = useIncrementAnalytics();
   const createCheckout = useCreateCheckout();
   const createFree = useCreateFreeSubscription();
-  const cancelSubscription = useCancelSubscription();
 
   const handleCancelSubscription = () => {
-    cancelSubscription.mutate(undefined, {
-      onSuccess: (res) => {
-        if (res.status && res.link) {
-          window.location.href = res.link;
-        } else {
-          toast(res.message || t("subPaymentCancelled"), "error");
-        }
-      },
-      onError: () => {
-        toast(t("subPaymentCancelled"), "error");
-      },
-    });
+    router.push(`/subscription/cancel/${parsed.token}`);
   };
 
   // Increment view count once.
@@ -226,7 +215,6 @@ export default function PlansView({ parsed }: Props) {
           <Button
             variant="outline"
             onClick={handleCancelSubscription}
-            isLoading={cancelSubscription.isPending}
             className="border border-red-500/60 text-red-400 hover:bg-red-500/10 rounded-full px-5 h-10 self-stretch sm:self-auto"
           >
             {t("cancelSubscription")}
