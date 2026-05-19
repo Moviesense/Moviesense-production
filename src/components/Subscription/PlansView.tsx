@@ -252,11 +252,12 @@ export default function PlansView({ parsed }: Props) {
         ) : (
           <div className="grid sm:grid-cols-2 gap-4">
             {plans.map((plan) => {
-              const isCurrent =
-                hasActiveSubscription &&
+              const matchesActivePlan =
                 !!activePlan &&
                 (plan.product_id === activePlan.product_id ||
                   plan._id === activePlan._id);
+              const isCurrent =
+                matchesActivePlan && (isFreePlan(plan) || hasActiveSubscription);
               return (
                 <PlanCard
                   key={plan._id}

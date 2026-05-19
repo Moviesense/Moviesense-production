@@ -108,7 +108,7 @@ export const subscriptionService = {
   ): Promise<RenewTokenMarkResponse> => {
     const res = await axios.post<RenewTokenMarkResponse>(
       `${process.env.NEXT_PUBLIC_API_URL}/subscription/mark-renew-token-used`,
-      {},
+      { token },
       {
         headers: {
           Authorization: `Bearer ${token}`,
