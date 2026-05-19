@@ -758,17 +758,27 @@ export function HeroCarousel({
                   )}
                   {(() => {
                     const runtime = formatRuntime(slide.runtime);
-                    const meta = [
-                      slide.contentRating ? `[${slide.contentRating}]` : null,
+                    const textParts = [
                       slide.year || null,
                       runtime || null,
                     ].filter(Boolean);
-                    if (meta.length === 0) return null;
+                    if (!slide.contentRating && textParts.length === 0)
+                      return null;
                     return (
                       <p
-                        className={`text-white transition-all duration-500 font-semibold ease-in-out origin-left rtl:origin-right will-change-transform antialiased text-xs sm:text-lg text-center sm:text-start ${from == "movie" ? "mt-1" : "mt-2 sm:mt-4"}`}
+                        className={`text-white transition-all duration-500 font-semibold ease-in-out origin-left rtl:origin-right will-change-transform antialiased text-xs sm:text-lg flex items-center justify-center sm:justify-start gap-2 ${from == "movie" ? "mt-1" : "mt-2 sm:mt-4"}`}
                       >
-                        {meta.join(" | ")}
+                        {slide.contentRating && (
+                          <span className="inline-flex items-center justify-center border border-white/80 sm:px-1.5 px-[3px] sm:py-1 py-[1px] text-[12px] sm:text-lg leading-none">
+                            {slide.contentRating}
+                          </span>
+                        )}
+                        {slide.contentRating && textParts.length > 0 && (
+                          <span>|</span>
+                        )}
+                        {textParts.length > 0 && (
+                          <span>{textParts.join(" | ")}</span>
+                        )}
                       </p>
                     );
                   })()}

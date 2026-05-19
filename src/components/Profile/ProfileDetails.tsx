@@ -14,21 +14,7 @@ import {
   ChevronLeft,
   ArrowLeft,
 } from "lucide-react";
-
-const COUNTRIES = [
-  { code: "AE", name: "UAE (+971)", dialCode: "+971" },
-  { code: "SA", name: "Saudi Arabia (+966)", dialCode: "+966" },
-  { code: "EG", name: "Egypt (+20)", dialCode: "+20" },
-  { code: "QA", name: "Qatar (+974)", dialCode: "+974" },
-  { code: "KW", name: "Kuwait (+965)", dialCode: "+965" },
-  { code: "OM", name: "Oman (+968)", dialCode: "+968" },
-  { code: "BH", name: "Bahrain (+973)", dialCode: "+973" },
-  { code: "JO", name: "Jordan (+962)", dialCode: "+962" },
-  { code: "LB", name: "Lebanon (+961)", dialCode: "+961" },
-  { code: "IN", name: "India (+91)", dialCode: "+91" },
-  { code: "US", name: "USA (+1)", dialCode: "+1" },
-  { code: "GB", name: "UK (+44)", dialCode: "+44" },
-];
+import { COUNTRIES } from "@/lib/countries";
 
 export function ProfileDetails({ onBack }: { onBack?: () => void }) {
   const { t } = useLanguage();
