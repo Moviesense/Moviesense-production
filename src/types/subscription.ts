@@ -112,7 +112,7 @@ export interface CreatePasswordRequest {
   token: string;
   password: string;
   phoneCode: string;
-  phoneNumber: string;
+  phoneNumber?: string;
 }
 
 export interface CreatePasswordResponse {

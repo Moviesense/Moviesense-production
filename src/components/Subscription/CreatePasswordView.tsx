@@ -34,9 +34,10 @@ export default function CreatePasswordView({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<CreatePasswordFormValues>({
     resolver: zodResolver(createPasswordSchema),
+    mode: "onChange",
     defaultValues: {
       password: "",
       confirmPassword: "",
@@ -161,7 +162,7 @@ export default function CreatePasswordView({
 
         <Button
           type="submit"
-          disabled={isPending}
+          disabled={isPending || !isValid}
           variant="primary"
           className="w-full"
         >

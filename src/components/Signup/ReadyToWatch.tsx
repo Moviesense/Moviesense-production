@@ -10,7 +10,13 @@ const signupSchema = z.object({
   email: z.string().email("Invalid email address"),
   country: z.string().optional(),
   phoneCode: z.string().optional(),
-  mobileNumber: z.string().optional(),
+  mobileNumber: z
+    .string()
+    .optional()
+    .refine((val) => !val || /^\d+$/.test(val), {
+      message:
+        "Phone number must contain digits only — no spaces or special characters",
+    }),
 });
 
 type SignupFormValues = z.infer<typeof signupSchema>;
@@ -74,7 +80,8 @@ export default function ReadyToWatch({
   });
 
   const emailValue = watch("email");
-  const isFormDisabled = !emailValue || !!errors.email;
+  const isFormDisabled =
+    !emailValue || !!errors.email || !!errors.mobileNumber;
 
   useEffect(() => {
     const initCountry = async () => {

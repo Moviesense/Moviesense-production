@@ -10,9 +10,11 @@ export const createPasswordSchema = z
       .regex(/^\+?\d{1,5}$/, "Invalid country code"),
     phoneNumber: z
       .string()
-      .min(6, "Phone number is too short")
-      .max(15, "Phone number is too long")
-      .regex(/^\d+$/, "Phone number must contain digits only"),
+      .optional()
+      .refine((val) => !val || /^\d{6,15}$/.test(val), {
+        message:
+          "Phone number must be 6–15 digits with no spaces or special characters",
+      }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",

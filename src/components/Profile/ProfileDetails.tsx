@@ -27,6 +27,11 @@ export function ProfileDetails({ onBack }: { onBack?: () => void }) {
     phoneNumber: "",
   });
 
+  const phoneError =
+    formData.phoneNumber && !/^\d+$/.test(formData.phoneNumber)
+      ? "Phone number must contain digits only — no spaces or special characters"
+      : undefined;
+
   useEffect(() => {
     if (profile?.user) {
       let dialCode = profile.user.phoneCode;
@@ -50,6 +55,7 @@ export function ProfileDetails({ onBack }: { onBack?: () => void }) {
   }, [profile]);
 
   const handleSave = async () => {
+    if (phoneError) return;
     try {
       await updateProfile.mutateAsync({
         fullName: formData.name,
@@ -124,13 +130,15 @@ export function ProfileDetails({ onBack }: { onBack?: () => void }) {
             </div>
             <div className="w-2/3">
               <Input
-                type="text"
+                type="tel"
+                inputMode="numeric"
                 value={formData.phoneNumber}
                 onChange={(e) =>
                   setFormData({ ...formData, phoneNumber: e.target.value })
                 }
                 className="h-10 sm:h-12 rounded-full text-sm sm:px-5 border-neutral-200 bg-white text-neutral-900 placeholder-neutral-400"
                 placeholder={t("phoneNumber")}
+                error={phoneError}
               />
             </div>
           </div>
@@ -153,6 +161,7 @@ export function ProfileDetails({ onBack }: { onBack?: () => void }) {
           <Button
             onClick={handleSave}
             isLoading={updateProfile.isPending}
+            disabled={!!phoneError}
             variant="primary"
             className="w-full px-8 h-10 sm:h-12"
           >
