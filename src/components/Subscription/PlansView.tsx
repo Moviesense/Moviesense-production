@@ -33,6 +33,21 @@ const isFreePlan = (plan: SubscriptionPlanItem) => {
   return !Number.isNaN(price) && price === 0;
 };
 
+// A coupon's planType ("monthly", "yearly", etc.) restricts the discount to
+// matching plans. Missing/empty/"all" means the coupon applies to every plan.
+const couponAppliesToPlan = (
+  plan: SubscriptionPlanItem,
+  couponPlanType?: string | null,
+) => {
+  if (!couponPlanType) return true;
+  const target = couponPlanType.trim().toLowerCase();
+  if (!target || target === "all") return true;
+  return (
+    plan.product_id.toLowerCase().includes(target) ||
+    plan.name.toLowerCase().includes(target)
+  );
+};
+
 const toTitleCase = (s: string) =>
   s.toLowerCase().replace(/\b\w/g, (l) => l.toUpperCase());
 
@@ -44,6 +59,7 @@ export default function PlansView({ parsed }: Props) {
   const [appliedCoupon, setAppliedCoupon] = useState<{
     code: string;
     discountPercent: number;
+    planType?: string | null;
   } | null>(null);
 
   const router = useRouter();
@@ -76,6 +92,7 @@ export default function PlansView({ parsed }: Props) {
           setAppliedCoupon({
             code,
             discountPercent: res.coupon.discountPercent,
+            planType: res.coupon.planType ?? null,
           });
           toast(t("subCouponApplied"), "success");
         } else {
@@ -106,6 +123,11 @@ export default function PlansView({ parsed }: Props) {
 
   const handleSelectPlan = (plan: SubscriptionPlanItem) => {
     setSelectedPlanId(plan._id);
+
+    const promoCode =
+      appliedCoupon && couponAppliesToPlan(plan, appliedCoupon.planType)
+        ? appliedCoupon.code
+        : undefined;
 
     if (isFreePlan(plan)) {
       createFree.mutate(
@@ -142,7 +164,7 @@ export default function PlansView({ parsed }: Props) {
         token: parsed.token,
         successUrl: buildSuccessUrl(parsed.token),
         cancelUrl: buildCancelUrl(parsed.token),
-        promoCode: appliedCoupon?.code,
+        promoCode,
       },
       {
         onSuccess: (res) => {
@@ -251,7 +273,12 @@ export default function PlansView({ parsed }: Props) {
                 <PlanCard
                   key={plan._id}
                   plan={plan}
-                  discountPercent={appliedCoupon?.discountPercent ?? 0}
+                  discountPercent={
+                    appliedCoupon &&
+                    couponAppliesToPlan(plan, appliedCoupon.planType)
+                      ? appliedCoupon.discountPercent
+                      : 0
+                  }
                   isBusy={isBusy(plan._id)}
                   disabled={createCheckout.isPending || createFree.isPending}
                   isCurrent={isCurrent}
@@ -278,6 +305,13 @@ export default function PlansView({ parsed }: Props) {
               </span>{" "}
               — {appliedCoupon.discountPercent}%{" "}
               {t("subDiscount").toLowerCase()}
+              {appliedCoupon.planType &&
+              appliedCoupon.planType.toLowerCase() !== "all" ? (
+                <span className="text-neutral-400">
+                  {" "}
+                  ({appliedCoupon.planType.replace(/_/g, " ")})
+                </span>
+              ) : null}
             </div>
             <button
               type="button"
