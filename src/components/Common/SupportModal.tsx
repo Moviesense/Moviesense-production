@@ -27,10 +27,12 @@ export const SupportModal: React.FC<SupportModalProps> = ({
   const whatsappDigits = whatsappRaw.replace(/\D/g, "");
 
   const handleWhatsApp = () => {
+    return;
     window.open(`https://wa.me/${whatsappDigits}`, "_blank");
   };
 
   const handleEmail = () => {
+    return;
     window.location.href = `mailto:${email}`;
   };
 
