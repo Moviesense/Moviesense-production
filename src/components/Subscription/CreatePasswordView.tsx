@@ -146,7 +146,7 @@ export default function CreatePasswordView({
               label={t("subPhoneNumber")}
               type="tel"
               inputMode="numeric"
-              placeholder="9999999999"
+              placeholder={`${t("phoneNumber")} (${t("optional")})`}
               error={errors.phoneNumber?.message}
               {...register("phoneNumber")}
               className="bg-transparent border-neutral-600 text-white h-12 rounded-md"
