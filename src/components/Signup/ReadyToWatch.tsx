@@ -13,9 +13,9 @@ const signupSchema = z.object({
   mobileNumber: z
     .string()
     .optional()
-    .refine((val) => !val || /^\d+$/.test(val), {
+    .refine((val) => !val || /^\d{6,15}$/.test(val), {
       message:
-        "Phone number must contain digits only — no spaces or special characters",
+        "Phone number must be 6–15 digits with no spaces or special characters",
     }),
 });
 

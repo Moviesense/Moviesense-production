@@ -28,8 +28,8 @@ export function ProfileDetails({ onBack }: { onBack?: () => void }) {
   });
 
   const phoneError =
-    formData.phoneNumber && !/^\d+$/.test(formData.phoneNumber)
-      ? "Phone number must contain digits only — no spaces or special characters"
+    formData.phoneNumber && !/^\d{6,15}$/.test(formData.phoneNumber)
+      ? "Phone number must be 6–15 digits with no spaces or special characters"
       : undefined;
 
   useEffect(() => {
