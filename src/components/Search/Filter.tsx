@@ -2,14 +2,14 @@
 
 import { ChevronDown, X, Loader2 } from "lucide-react";
 import React, { useState } from "react";
-import { useGenres, useLanguages } from "@/hooks/useMovie";
+import { useGenres, useContentRatings } from "@/hooks/useMovie";
 import { Button } from "../Common/Button";
 import { useLanguage } from "@/context/LanguageContext";
 
 export interface FilterSelections {
   year?: string;
   genre?: string;
-  language?: string;
+  maturity?: string;
   media_type?: string;
 }
 
@@ -27,7 +27,7 @@ const YEARS = ["2026", "2025", "2024", "2023", "2022", "2021", "2020", "2019"];
 //   { id: "tv", name: "TV Shows" },
 // ];
 
-type Category = "Year" | "Genre" | "Language" | "Media Type";
+type Category = "Year" | "Genre" | "Maturity" | "Media Type";
 
 export function Filter({
   open,
@@ -41,7 +41,8 @@ export function Filter({
   );
 
   const { data: genresData, isLoading: isLoadingGenres } = useGenres();
-  const { data: languagesData, isLoading: isLoadingLanguages } = useLanguages();
+  const { data: contentRatingsData, isLoading: isLoadingContentRatings } =
+    useContentRatings();
   const { t } = useLanguage();
 
   const MEDIA_TYPES = [
@@ -59,21 +60,24 @@ export function Filter({
     const newSelections = { ...selections };
     if (category === "Year") newSelections.year = id;
     if (category === "Genre") newSelections.genre = id;
-    if (category === "Language") newSelections.language = id;
+    if (category === "Maturity") newSelections.maturity = id;
     if (category === "Media Type") newSelections.media_type = id;
 
     setSelections(newSelections);
   };
 
-  const categories: Category[] = ["Year", "Genre", "Language", "Media Type"];
+  const categories: Category[] = ["Year", "Genre", "Maturity", "Media Type"];
 
   const getOptions = (category: Category = activeCategory) => {
     if (category === "Year") return YEARS.map((y) => ({ id: y, name: y }));
     if (category === "Genre")
       return genresData?.genre.map((g) => ({ id: g._id, name: g.name })) || [];
-    if (category === "Language")
+    if (category === "Maturity")
       return (
-        languagesData?.languages.map((l) => ({ id: l._id, name: l.name })) || []
+        contentRatingsData?.data.map((r) => ({
+          id: r.value,
+          name: r.label,
+        })) || []
       );
     if (category === "Media Type") return MEDIA_TYPES;
     return [];
@@ -82,7 +86,7 @@ export function Filter({
   const getSelectedId = (cat: Category) => {
     if (cat === "Year") return selections.year;
     if (cat === "Genre") return selections.genre;
-    if (cat === "Language") return selections.language;
+    if (cat === "Maturity") return selections.maturity;
     if (cat === "Media Type") return selections.media_type;
     return null;
   };
@@ -96,7 +100,7 @@ export function Filter({
 
   const isLoading =
     (activeCategory === "Genre" && isLoadingGenres) ||
-    (activeCategory === "Language" && isLoadingLanguages);
+    (activeCategory === "Maturity" && isLoadingContentRatings);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center font-manrope">
@@ -144,8 +148,8 @@ export function Filter({
                         ? t("genre")
                         : cat === "Year"
                           ? t("year")
-                          : cat === "Language"
-                            ? t("language")
+                          : cat === "Maturity"
+                            ? t("maturity")
                             : t("mediaType"))}
                   </span>
                   <Chevron rotated={isActive} dark={isActive} />
@@ -166,8 +170,9 @@ export function Filter({
                 return (
                   <button
                     key={option.id}
+                    title={option.name}
                     onClick={() => handleSelect(activeCategory, option.id)}
-                    className={`px-4 py-2 md:px-6 md:py-4 rounded-xl text-xs md:text-sm xl:text-base text-nowrap capitalize font-medium transition-all cursor-pointer border ${
+                    className={`px-4 py-2 md:px-6 md:py-4 rounded-xl text-xs md:text-sm xl:text-base capitalize font-medium transition-all cursor-pointer border whitespace-nowrap overflow-hidden text-ellipsis text-center ${
                       isSelected
                         ? "bg-[#25A4AD] text-white border-[#25A4AD] shadow-[0_0_20px_rgba(37,164,173,0.3)]"
                         : "bg-white/5 text-zinc-400 border-white/5 hover:bg-white/10 hover:text-white"

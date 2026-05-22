@@ -16,7 +16,11 @@ import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Filter, FilterSelections } from "@/components/Search/Filter";
 import { BackButton } from "@/components/Common/BackButton";
-import { useSearchMovies, useGenres, useLanguages } from "@/hooks/useMovie";
+import {
+  useSearchMovies,
+  useGenres,
+  useContentRatings,
+} from "@/hooks/useMovie";
 import { useLanguage } from "@/context/LanguageContext";
 import { useInView } from "react-intersection-observer";
 import { useToast } from "@/context/ToastContext";
@@ -87,7 +91,7 @@ export default function SearchInput() {
   const { ref, inView } = useInView();
 
   const { data: genresData } = useGenres();
-  const { data: languagesData } = useLanguages();
+  const { data: contentRatingsData } = useContentRatings();
 
   const debouncedSearch = useMemo(
     () =>
@@ -176,7 +180,7 @@ export default function SearchInput() {
   } = useSearchMovies({
     search: debouncedValue,
     genre: selections.genre,
-    language: selections.language,
+    maturity: selections.maturity,
     year: selections.year,
     media_type: selections.media_type,
     limit: 12,
@@ -252,8 +256,10 @@ export default function SearchInput() {
   const getFilterDisplayName = (key: string, id: string) => {
     if (key === "genre")
       return genresData?.genre.find((g) => g._id === id)?.name || id;
-    if (key === "language")
-      return languagesData?.languages.find((l) => l._id === id)?.name || id;
+    if (key === "maturity")
+      return (
+        contentRatingsData?.data.find((r) => r.value === id)?.label || id
+      );
     if (key === "media_type")
       return MEDIA_TYPES.find((m) => m.id === id)?.name || id;
     return id;

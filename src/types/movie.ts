@@ -168,6 +168,17 @@ export interface LanguageResponse {
   languages: Language[];
 }
 
+export interface ContentRating {
+  label: string;
+  value: string;
+}
+
+export interface ContentRatingResponse {
+  status: boolean;
+  message: string;
+  data: ContentRating[];
+}
+
 export interface Role {
   _id: string;
   name: string;
@@ -212,7 +223,7 @@ export interface SearchFilters {
   search?: string;
   page?: number;
   limit?: number;
-  language?: string;
+  maturity?: string;
   genre?: string;
   year?: string;
   media_type?: string;

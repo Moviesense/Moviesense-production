@@ -84,6 +84,13 @@ export const useLanguages = () => {
   });
 };
 
+export const useContentRatings = () => {
+  return useQuery({
+    queryKey: ["contentRatings"],
+    queryFn: () => movieService.getContentRatings(),
+  });
+};
+
 export const useUpdateViewedContent = () => {
   return useMutation({
     mutationFn: (data: ViewedContentRequest) =>

@@ -1,5 +1,6 @@
 import api from "@/lib/axios";
 import {
+  ContentRatingResponse,
   GenreResponse,
   LanguageResponse,
   MovieDetailResponse,
@@ -137,6 +138,12 @@ export const movieService = {
     const response = await api.get<LanguageResponse>("/language", {
       params: { key: "Qx7LpA2zR9" },
     });
+    return response.data;
+  },
+  getContentRatings: async (): Promise<ContentRatingResponse> => {
+    const response = await api.get<ContentRatingResponse>(
+      "/movie/content-rating",
+    );
     return response.data;
   },
   updateViewedContent: async (data: any): Promise<any> => {

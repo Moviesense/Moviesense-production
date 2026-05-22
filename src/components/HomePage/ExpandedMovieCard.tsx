@@ -264,8 +264,16 @@ export function ExpandedMovieCard({
         <div className="flex flex-col space-y-1">
           {!isEpisode && !sectionTitle?.includes("Ramadan") && (
             <>
-              <div className="text-white font-bold text-md md:text-md xl:text-lg 2xl:text-xl line-clamp-1 mb-0 text-start">
-                {title}
+              <div className="flex items-center justify-between gap-2 mb-0">
+                <div className="text-white font-bold text-md md:text-md xl:text-lg 2xl:text-xl line-clamp-1 text-start flex-1 min-w-0">
+                  {title}
+                </div>
+                {views && (
+                  <Views
+                    view={views}
+                    className="flex-shrink-0 text-xs sm:text-sm"
+                  />
+                )}
               </div>
               {type === "PAYPERVIEWS" && isAuthenticated && (
                 <div className="flex flex-col gap-1 mt-1">
@@ -365,26 +373,23 @@ export function ExpandedMovieCard({
             {stripHtml(description)}
           </div>
 
-          {/* <div className="flex items-center justify-between gap-2 text-xs font-medium my-1">
-            <span className="flex items-center gap-1">
+          <div className="flex items-center justify-between gap-2 text-xs font-medium my-1">
+            {/* <span className="flex items-center gap-1">
               <span className="text-neutral-400">{year}</span>
               <span className="border border-neutral-500 px-1 rounded text-xs text-neutral-400">
                 HD
               </span>
-            </span>
+            </span> */}
 
-            {(duration || views) && (
+            {duration && (
               <div className="flex justify-between text-xs sm:text-sm">
-                {duration && (
-                  <span className="rounded-full text-neutral-400 flex items-center gap-1">
-                    <Clock size={14} />
-                    <span className="text-nowrap">{duration}</span>
-                  </span>
-                )}
-                {views && <Views view={views} />}
+                <span className="rounded-full text-neutral-400 flex items-center gap-1">
+                  <Clock size={14} />
+                  <span className="text-nowrap">{duration}</span>
+                </span>
               </div>
             )}
-          </div> */}
+          </div>
         </div>
         {/* ACTIONS */}
         {actions && (
