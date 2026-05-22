@@ -55,7 +55,7 @@ export default function CreatePasswordView({
         token,
         password: values.password,
         phoneCode: values.phoneCode,
-        phoneNumber: values.phoneNumber,
+        phoneNumber: values.phoneNumber?.replace(/\s+/g, ""),
       },
       {
         onSuccess: (res) => {

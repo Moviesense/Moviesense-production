@@ -27,9 +27,10 @@ export function ProfileDetails({ onBack }: { onBack?: () => void }) {
     phoneNumber: "",
   });
 
+  const sanitizedPhone = formData.phoneNumber.replace(/\s+/g, "");
   const phoneError =
-    formData.phoneNumber && !/^\d{6,15}$/.test(formData.phoneNumber)
-      ? "Phone number must be 6–15 digits with no spaces or special characters"
+    sanitizedPhone.length > 0 && !/^\d{6,15}$/.test(sanitizedPhone)
+      ? "Phone number must be 6–15 digits — spaces allowed, no letters or special characters"
       : undefined;
 
   useEffect(() => {
@@ -59,7 +60,7 @@ export function ProfileDetails({ onBack }: { onBack?: () => void }) {
     try {
       await updateProfile.mutateAsync({
         fullName: formData.name,
-        phoneNumber: formData.phoneNumber,
+        phoneNumber: sanitizedPhone,
         phoneCode: formData.countryCode,
       });
       toast(t("saveChanges"), "success");

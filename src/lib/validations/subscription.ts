@@ -11,10 +11,16 @@ export const createPasswordSchema = z
     phoneNumber: z
       .string()
       .optional()
-      .refine((val) => !val || /^\d{6,15}$/.test(val), {
-        message:
-          "Phone number must be 6–15 digits with no spaces or special characters",
-      }),
+      .refine(
+        (val) => {
+          const sanitized = (val ?? "").replace(/\s+/g, "");
+          return sanitized.length === 0 || /^\d{6,15}$/.test(sanitized);
+        },
+        {
+          message:
+            "Phone number must be 6–15 digits — spaces allowed, no letters or special characters",
+        },
+      ),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
