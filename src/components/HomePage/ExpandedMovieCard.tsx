@@ -264,14 +264,14 @@ export function ExpandedMovieCard({
         <div className="flex flex-col space-y-1">
           {!isEpisode && !sectionTitle?.includes("Ramadan") && (
             <>
-              <div className="flex items-center justify-between gap-2 mb-0">
-                <div className="text-white font-bold text-md md:text-md xl:text-lg 2xl:text-xl line-clamp-1 text-start flex-1 min-w-0">
+              <div className="flex items-center justify-between gap-2 mb-0 w-full">
+                <div className="text-white font-bold text-md md:text-md xl:text-lg 2xl:text-xl truncate text-start flex-1 min-w-0">
                   {title}
                 </div>
                 {views && (
                   <Views
                     view={views}
-                    className="flex-shrink-0 text-xs sm:text-sm"
+                    className="flex-shrink-0 whitespace-nowrap text-xs sm:text-sm"
                   />
                 )}
               </div>

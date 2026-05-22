@@ -136,6 +136,7 @@ export default function MovieDetailsPage({
       adDetails: movie.adDetails,
       contentRating: movie.contentRating,
       year: movie.year,
+      view: movie.view,
       GoogleAd: movie.GoogleAd,
     },
   ];

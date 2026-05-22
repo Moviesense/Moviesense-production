@@ -11,7 +11,7 @@ export function Views({ view, className }: ViewsProps) {
   return (
     <span className={cn("text-neutral-400 flex items-center gap-1", className)}>
       <Eye size={16} />
-      {formatViews(view)}
+      {formatViews(view)} Views
     </span>
   );
 }

@@ -40,6 +40,8 @@ import { toast } from "@/context/ToastContext";
 import { ShareModal } from "@/components/Common/ShareModal";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { AnalyticsEventType } from "@/types/analytics";
+import { Eye } from "lucide-react";
+import { formatViews } from "@/lib/utils";
 
 interface HeroSlide {
   _id: string | number;
@@ -83,6 +85,7 @@ interface HeroSlide {
   totalLikes?: number;
   likeStatus?: boolean;
   isFavorite?: boolean;
+  view?: number;
   GoogleAd?: boolean;
   adSignedUrl?: string;
   customAd?: boolean;
@@ -1051,7 +1054,7 @@ export function HeroCarousel({
                     )}
                   />
                   <div className="w-[1px] h-8 bg-white/10 ml-2 mr-5 hidden sm:block" />
-                  <div className="flex items-center gap-8 sm:px-0">
+                  <div className="flex items-center gap-3.5 sm:gap-8 sm:px-0">
                     <IconButton
                       title={t("myList")}
                       onClick={() => handleToggleFavorite()}
@@ -1103,6 +1106,17 @@ export function HeroCarousel({
                     >
                       <Share2 size={18} />
                     </IconButton>
+                    {slide.view !== undefined && slide.view !== null && (
+                      <IconButton
+                        title={t("views")}
+                        className="h-[30px] w-[30px] 2xl:h-[40px] 2xl:w-[40px]"
+                        totalLikes={formatViews(slide.view)}
+                        disabled
+                        //   onClick={() => {}}
+                      >
+                        <Eye size={18} />
+                      </IconButton>
+                    )}
                   </div>
                 </div>
               </div>

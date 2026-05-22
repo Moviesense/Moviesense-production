@@ -6,7 +6,7 @@ interface IconButtonProps {
   onClick?: (e: React.MouseEvent) => void;
   disabled?: boolean;
   className?: string;
-  totalLikes?: number;
+  totalLikes?: number | string;
 }
 
 export function IconButton({
@@ -19,7 +19,10 @@ export function IconButton({
 }: IconButtonProps) {
   return (
     <span
-      className="flex items-center gap-2 group/btn cursor-pointer"
+      className={cn(
+        "flex items-center gap-1.5 sm:gap-2 group/btn",
+        onClick ? "cursor-pointer" : "cursor-default",
+      )}
       onClick={(e) => {
         if (disabled) return;
         onClick?.(e);
@@ -27,17 +30,18 @@ export function IconButton({
     >
       <span
         className={cn(
-          "border-gradient h-[28px] w-[28px] flex justify-center items-center cursor-pointer rounded-full text-white shadow-none disabled:opacity-50 transition-colors",
+          "border-gradient h-[28px] w-[28px] flex justify-center items-center rounded-full text-white shadow-none disabled:opacity-50 transition-colors",
+          onClick ? "cursor-pointer" : "cursor-default",
           className,
         )}
       >
         {children}
       </span>
-      {totalLikes !== undefined && totalLikes > 0 && (
-        <span className="text-white text-xs font-bold">{totalLikes}</span>
+      {totalLikes !== undefined && totalLikes !== null && totalLikes !== 0 && (
+        <span className="text-white text-[14px] font-bold">{totalLikes}</span>
       )}
       {title && (
-        <span className="font-medium text-[10px] sm:text-xs text-neutral-300">
+        <span className="font-medium text-[12px] sm:text-[14px] text-neutral-300">
           {title}
         </span>
       )}
