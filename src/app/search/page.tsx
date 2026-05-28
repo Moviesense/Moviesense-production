@@ -257,9 +257,7 @@ export default function SearchInput() {
     if (key === "genre")
       return genresData?.genre.find((g) => g._id === id)?.name || id;
     if (key === "maturity")
-      return (
-        contentRatingsData?.data.find((r) => r.value === id)?.label || id
-      );
+      return contentRatingsData?.data.find((r) => r.value === id)?.label || id;
     if (key === "media_type")
       return MEDIA_TYPES.find((m) => m.id === id)?.name || id;
     return id;

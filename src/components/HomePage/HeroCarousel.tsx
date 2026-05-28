@@ -741,10 +741,10 @@ export function HeroCarousel({
                       width={500}
                       height={300}
                       className={cn(
-                        "object-contain transition-all duration-500 ease-in-out origin-left rtl:origin-right will-change-transform antialiased h-auto rounded-md",
+                        "object-contain transition-all duration-500 ease-in-out origin-left rtl:origin-right will-change-transform antialiased h-auto rounded-md max-w-[350px]",
                         from === "home"
-                          ? "max-h-[80px] w-auto sm:h-[80px] xl:h-[140px] sm:max-h-[120px] 2xl:max-h-[180px] w-auto opacity-100 xl:mb-[-1rem] group-hover/hero-content:h-[200px] group-hover/hero-content:opacity-100 mb-0"
-                          : "max-h-[60px] sm:h-[80px] xl:h-[140px] sm:max-h-[100px] 2xl:max-h-[150px] w-auto opacity-100 mb-2",
+                          ? "max-h-[80px] w-auto sm:h-auto xl:h-auto sm:max-h-[120px] xl:max-h-[210px] 2xl:max-h-[240px] w-auto opacity-100 mb-0"
+                          : "max-h-[60px] sm:h-auto xl:h-auto sm:max-h-[100px] xl:max-h-[200px] 2xl:max-h-[220px] w-auto opacity-100 mb-2",
                       )}
                     />
                   ) : (
@@ -752,7 +752,7 @@ export function HeroCarousel({
                       className={cn(
                         "text-white font-bold transition-all duration-500 ease-in-out origin-left rtl:origin-right will-change-transform antialiased text-md text-center sm:text-start",
                         from === "home"
-                          ? "2xl:text-5xl xl:text-4xl xl:scale-[0.8] opacity-100 xl:mb-[-1rem] group-hover/hero-content:scale-100 group-hover/hero-content:opacity-100 group-hover/hero-content:mb-2 mb-0 sm:mb-2"
+                          ? "2xl:text-5xl xl:text-4xl xl:scale-[0.8] opacity-100 group-hover/hero-content:scale-100 group-hover/hero-content:opacity-100 group-hover/hero-content:mb-2 mb-0 sm:mb-2"
                           : "2xl:text-4xl xl:text-2xl opacity-100 mb-0 sm:mb-1",
                       )}
                     >
@@ -791,7 +791,7 @@ export function HeroCarousel({
                       className={cn(
                         "max-w-xl text-sm font-medium sm:text-md xl:text-lg transition-all duration-500 ease-in-out line-clamp-1 sm:line-clamp-2 xl:line-clamp-none capitalize mb-0 px-2 sm:px-0 sm:mb-0",
                         from === "home"
-                          ? "opacity-100 group-hover/hero-content:opacity-100 group-hover/hero-content:line-clamp-none xl:mt-8 hidden sm:block"
+                          ? "opacity-100 group-hover/hero-content:opacity-100 group-hover/hero-content:line-clamp-none xl:mt-4 hidden sm:block"
                           : "opacity-100 mt-2",
                       )}
                     >
