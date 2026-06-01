@@ -31,8 +31,7 @@ import { toast } from "@/context/ToastContext";
 import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { Header } from "@/components/HomePage/Header";
-import { getCountry } from "@/lib/utils";
-import { SupportModal } from "@/components/Common/SupportModal";
+import { getCountry, supportPageUrl } from "@/lib/utils";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { AnalyticsEventType } from "@/types/analytics";
 import { ProfileDetails } from "@/components/Profile/ProfileDetails";
@@ -57,7 +56,6 @@ export default function ProfilePage() {
   );
   const [planType, setPlanType] = useState<string | null>(null);
   const [expiryDate, setExpiryDate] = useState<string | null>(null);
-  const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const contentRef = React.useRef<HTMLDivElement>(null);
   const { logout, userEmail, isSubscribed } = useAuth();
@@ -134,7 +132,7 @@ export default function ProfilePage() {
     if (activeTab === "history") {
       router.push("/history");
     } else if (activeTab === "support") {
-      setIsSupportModalOpen(true);
+      window.open(supportPageUrl, "_blank");
     } else if (activeTab === "terms") {
       if (supportLinks?.tncLink) {
         window.open(supportLinks.tncLink, "_blank");
@@ -524,10 +522,6 @@ export default function ProfilePage() {
         >
           {renderContent()}
           </section> */}
-        <SupportModal
-          isOpen={isSupportModalOpen}
-          onClose={() => setIsSupportModalOpen(false)}
-        />
       </div>
       {/* </div> */}
     </div>

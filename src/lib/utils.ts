@@ -7,6 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const supportWhatsApp = "971525120129";
 export const supportEmail = "support@nabtt.com";
+export const supportPageUrl = "https://moviesense.com/support/";
 
 export const formatViews = (views: string | number | undefined) => {
   if (views === undefined || views === null) return "";
