@@ -5,7 +5,6 @@ import { ChevronLeft, ChevronRight, Loader2, Play } from "lucide-react";
 import { MovieCard, MovieCardProps } from "./MovieCard";
 import { ExpandedMovieCard } from "./ExpandedMovieCard";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/Common/Button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import { IconButton } from "../Common/IconButton";
@@ -30,11 +29,17 @@ export function MovieRow({
   items,
   hideTitle = false,
   widgetType,
+  onLoadMore,
+  hasMore = false,
+  isLoadingMore = false,
 }: {
   title: string;
   items: MovieCardProps[];
   hideTitle?: boolean;
   widgetType?: number;
+  onLoadMore?: () => void;
+  hasMore?: boolean;
+  isLoadingMore?: boolean;
 }) {
   const { isRTL, t } = useLanguage();
   const router = useRouter();
@@ -135,8 +140,17 @@ export function MovieRow({
       } else {
         setCurrentPage(0);
       }
+
+      // Infinite scroll: prefetch the next page once we approach the end.
+      // RTL scrollLeft is negative, so normalise the distance for both directions.
+      const distanceToEnd = isRTL
+        ? scrollLeft + (scrollWidth - clientWidth)
+        : scrollWidth - clientWidth - scrollLeft;
+      if (onLoadMore && hasMore && !isLoadingMore && distanceToEnd < clientWidth) {
+        onLoadMore();
+      }
     }
-  }, [isRTL, items.length, visible]);
+  }, [isRTL, items.length, visible, onLoadMore, hasMore, isLoadingMore]);
 
   useEffect(() => {
     checkScroll();
@@ -262,6 +276,12 @@ export function MovieRow({
                 />
               </motion.div>
             ))}
+
+            {isLoadingMore && (
+              <div className="flex-shrink-0 flex items-center justify-center px-6 sm:px-8">
+                <Loader2 className="w-6 h-6 sm:w-8 sm:h-8 text-primary animate-spin" />
+              </div>
+            )}
           </div>
         </div>
 

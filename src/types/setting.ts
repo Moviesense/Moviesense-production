@@ -78,4 +78,6 @@ export interface WidgetDataResponse {
   status: boolean;
   message: string;
   series: any[];
+  page?: number;
+  perPage?: number;
 }

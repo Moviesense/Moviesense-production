@@ -39,7 +39,7 @@ export function Header() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { isAuthenticated, isSubscribed, logout, planType, userEmail } =
+  const { isAuthenticated, logout, planType, userEmail } =
     useAuth();
   const { data: profileData } = useProfiles();
   const { data: notifications } = useNotifications();
@@ -861,16 +861,7 @@ export function Header() {
                         </div>
                       </div>
                     )}
-                    {(!isSubscribed && (
-                      <Button
-                        variant="primary"
-                        onClick={handleUpgradePlan}
-                        className="sm:h-8 2xl:h-11 font-bold mr-2 py-0 xl:min-w-48"
-                      >
-                        {t("subscribe")}
-                      </Button>
-                    )) ||
-                    (isSubscribed && planType == "monthly") ? (
+                    {planType === "free_trial" && (
                       <Button
                         variant="primary"
                         onClick={handleUpgradePlan}
@@ -878,8 +869,6 @@ export function Header() {
                       >
                         {t("upgradePlan")}
                       </Button>
-                    ) : (
-                      ""
                     )}
                   </div>
                 </>
@@ -980,17 +969,17 @@ export function Header() {
                 </Button>
               </div>
             ) : (
-              <div className="flex flex-col gap-4 bg-background pb-4 pt-2">
-                <Button
-                  variant="primary"
-                  onClick={handleUpgradePlan}
-                  className="w-[90%] mx-auto h-10 text-sm font-bold rounded-full"
-                >
-                  {isSubscribed && planType == "monthly"
-                    ? t("upgradePlan")
-                    : t("subscribe")}
-                </Button>
-              </div>
+              planType === "free_trial" && (
+                <div className="flex flex-col gap-4 bg-background pb-4 pt-2">
+                  <Button
+                    variant="primary"
+                    onClick={handleUpgradePlan}
+                    className="w-[90%] mx-auto h-10 text-sm font-bold rounded-full"
+                  >
+                    {t("upgradePlan")}
+                  </Button>
+                </div>
+              )
             )}
 
             {!isAuthenticated && (

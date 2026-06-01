@@ -11,9 +11,13 @@ export const homeService = {
     return response.data;
   },
 
-  getWidgetData: async (widgetId: string): Promise<WidgetDataResponse> => {
+  getWidgetData: async (
+    widgetId: string,
+    page: number = 1,
+  ): Promise<WidgetDataResponse> => {
     const response = await api.get<WidgetDataResponse>(
       `/widget/${widgetId}/series/public`,
+      { params: { page } },
     );
     return response.data;
   },

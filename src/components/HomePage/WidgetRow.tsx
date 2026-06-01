@@ -11,11 +11,14 @@ interface WidgetRowProps {
 }
 
 export function WidgetRow({ widget, isSettingsLoading }: WidgetRowProps) {
-  const { data: widgetData, isLoading } = useWidgetData(widget._id);
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useWidgetData(widget._id);
   const { language } = useLanguage();
 
+  const series = data?.pages.flatMap((p) => p.series ?? []) ?? [];
+
   const items =
-    widgetData?.series?.map((item: any) => ({
+    series.map((item: any) => ({
       id: item._id,
       image: item.thumbnail || item.image || item.poster || "/images/movie.png",
       duration: item.duration,
@@ -64,6 +67,9 @@ export function WidgetRow({ widget, isSettingsLoading }: WidgetRowProps) {
           items={items}
           hideTitle={false}
           widgetType={widget.type}
+          onLoadMore={fetchNextPage}
+          hasMore={!!hasNextPage}
+          isLoadingMore={isFetchingNextPage}
         />
       )}
     </div>

@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { homeService } from "@/services/homeService";
 import { useActiveProfile } from "./useProfile";
 
@@ -13,9 +13,16 @@ export const useSettings = () => {
 
 export const useWidgetData = (widgetId: string, enabled: boolean = true) => {
   const activeProfile = useActiveProfile();
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ["widget", widgetId, activeProfile?._id],
-    queryFn: () => homeService.getWidgetData(widgetId),
+    queryFn: ({ pageParam }) => homeService.getWidgetData(widgetId, pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      const perPage = lastPage.perPage ?? 10;
+      const count = lastPage.series?.length ?? 0;
+      // A full page implies there may be more; a short page is the last one.
+      return count >= perPage ? allPages.length + 1 : undefined;
+    },
     enabled: !!widgetId && enabled,
     staleTime: 0,
   });

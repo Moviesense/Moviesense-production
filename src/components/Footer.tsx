@@ -8,7 +8,6 @@ import { useAnalytics } from "@/hooks/useAnalytics";
 import { AnalyticsEventType } from "@/types/analytics";
 import { useAuth } from "@/context/AuthContext";
 import { useRenewSubscription } from "@/hooks/useAuth";
-import { useSupportLinks } from "@/hooks/useSupportLinks";
 import { getCountry, supportPageUrl } from "@/lib/utils";
 import { toast } from "@/context/ToastContext";
 
@@ -18,7 +17,6 @@ const Footer = () => {
   const { track } = useAnalytics();
   const { isAuthenticated, userEmail } = useAuth();
   const renewSubscription = useRenewSubscription();
-  const { data: supportLinks } = useSupportLinks();
 
   const handleUpgradePlan = async () => {
     const email = userEmail;
@@ -59,26 +57,32 @@ const Footer = () => {
 
   const openTerms = () => {
     track(AnalyticsEventType.openTermsCondition);
-    if (supportLinks?.tncLink) {
-      window.open(supportLinks.tncLink, "_blank");
-    }
+    router.push("/terms");
   };
 
   const openPrivacy = () => {
-    if (supportLinks?.privacyPolicyLink) {
-      window.open(supportLinks.privacyPolicyLink, "_blank");
-    }
+    router.push("/privacy");
   };
 
-  // Only links that map to real app functionality are wired here.
+  const openExternal = (url: string) => window.open(url, "_blank");
+
   const helpLinks = [
+    { label: t("howToWatch"), onClick: () => router.push("/how-to-watch") },
+    {
+      label: t("academy"),
+      onClick: () => openExternal("https://academy.moviesense.com/"),
+    },
     { label: t("accountLogin"), onClick: () => router.push("/login") },
     { label: t("signup"), onClick: () => router.push("/signup") },
     { label: t("manageAccount"), onClick: () => router.push("/profile") },
-    { label: t("contactUs"), onClick: openSupport },
+    { label: t("contactUs"), onClick: () => router.push("/contact") },
   ];
 
   const otherLinks = [
+    {
+      label: t("academy"),
+      onClick: () => openExternal("https://academy.moviesense.com/"),
+    },
     { label: t("liveStream"), onClick: () => router.push("/live-tv") },
     { label: t("support"), onClick: openSupport },
   ];
