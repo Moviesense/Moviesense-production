@@ -30,6 +30,7 @@ const Footer = () => {
       const response = await renewSubscription.mutateAsync({
         email,
         country: country,
+        view: true,
       });
 
       if (response.status && response.token) {
