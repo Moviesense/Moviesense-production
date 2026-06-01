@@ -39,8 +39,7 @@ export function Header() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { isAuthenticated, logout, planType, userEmail } =
-    useAuth();
+  const { isAuthenticated, logout, planType, userEmail } = useAuth();
   const { data: profileData } = useProfiles();
   const { data: notifications } = useNotifications();
   useFcmToken();
@@ -195,6 +194,7 @@ export function Header() {
       const response = await renewSubscription.mutateAsync({
         email,
         country: country,
+        view: true,
       });
 
       if (response.status && response.token) {
