@@ -86,8 +86,7 @@ export default function ReadyToWatch({
   });
 
   const emailValue = watch("email");
-  const isFormDisabled =
-    !emailValue || !!errors.email || !!errors.mobileNumber;
+  const isFormDisabled = !emailValue || !!errors.email || !!errors.mobileNumber;
 
   useEffect(() => {
     const initCountry = async () => {
@@ -149,7 +148,7 @@ export default function ReadyToWatch({
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 relative z-10">
+    <div className="min-h-screen flex flex-col justify-between relative z-10">
       {/* <BackgroundVideo /> */}
       <div className="flex relative flex-col items-center w-full p-5 xl:p-8 2xl:p-10 max-w-md 2xl:max-w-xl mt-32 2xl:mt-35 mx-auto space-y-6 xl:space-y-8 2xl:space-y-10 bg-background-2 sm:bg-background rounded-md min-h-[83vh] sm:min-h-full">
         <div className="space-y-4">
