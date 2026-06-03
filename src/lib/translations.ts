@@ -183,6 +183,24 @@ const en = {
   editPersonalInfoSub: "Edit your personal information through this page",
   cannotModifyEmail:
     "You can not modify the email through the site, if you want to amend, you can contact customers service",
+  changeEmail: "Change Email",
+  newEmail: "New email address",
+  currentPassword: "Current password",
+  sendVerificationEmail: "Send verification email",
+  emailChangeNote:
+    "We'll send a verification link to your new email. It expires in 15 minutes.",
+  verifyingEmailChange: "Verifying your email change…",
+  emailUpdatedTitle: "Email Updated!",
+  emailUpdatedMessage:
+    "Your email has been updated successfully. Please sign in again.",
+  emailChangeFailedTitle: "Verification Failed",
+  invalidEmailChangeLink:
+    "This verification link is invalid or has expired. Please try again.",
+  missingEmailChangeToken: "No verification token found in the link.",
+  invalidEmail: "Please provide a valid email address",
+  emailMustBeDifferent: "New email must be different from current email",
+  verificationEmailSent: "Verification email sent successfully",
+  somethingWentWrong: "Something went wrong. Please try again.",
   returnToPreviousStep: "Return to the previous step",
   notificationPermissionDenied:
     "Notification permission is blocked. Please click the 'Lock' or 'Info' icon in the address bar to allow notifications manually.",
@@ -436,6 +454,25 @@ const ar: typeof en = {
   editPersonalInfoSub: "قم بتعديل معلوماتك الشخصية من خلال هذه الصفحة",
   cannotModifyEmail:
     "لا يمكنك تعديل البريد الإلكتروني عبر الموقع، إذا كنت ترغب في ذلك، يمكنك الاتصال بخدمة العملاء",
+  changeEmail: "تغيير البريد الإلكتروني",
+  newEmail: "عنوان البريد الإلكتروني الجديد",
+  currentPassword: "كلمة المرور الحالية",
+  sendVerificationEmail: "إرسال رسالة التحقق",
+  emailChangeNote:
+    "سنرسل رابط تحقق إلى بريدك الإلكتروني الجديد. تنتهي صلاحيته خلال 15 دقيقة.",
+  verifyingEmailChange: "جارٍ التحقق من تغيير بريدك الإلكتروني…",
+  emailUpdatedTitle: "تم تحديث البريد الإلكتروني!",
+  emailUpdatedMessage:
+    "تم تحديث بريدك الإلكتروني بنجاح. يرجى تسجيل الدخول مرة أخرى.",
+  emailChangeFailedTitle: "فشل التحقق",
+  invalidEmailChangeLink:
+    "رابط التحقق هذا غير صالح أو منتهي الصلاحية. يرجى المحاولة مرة أخرى.",
+  missingEmailChangeToken: "لم يتم العثور على رمز التحقق في الرابط.",
+  invalidEmail: "يرجى إدخال عنوان بريد إلكتروني صالح",
+  emailMustBeDifferent:
+    "يجب أن يكون البريد الإلكتروني الجديد مختلفًا عن البريد الإلكتروني الحالي",
+  verificationEmailSent: "تم إرسال رسالة التحقق بنجاح",
+  somethingWentWrong: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
   returnToPreviousStep: "العودة إلى الخطوة السابقة",
   notificationPermissionDenied:
     "إذن الإشعارات محظور. يرجى النقر على أيقونة 'القفل' أو 'المعلومات' في شريط العنوان للسماح بالإشعارات يدويًا.",

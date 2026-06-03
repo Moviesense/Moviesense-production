@@ -11,16 +11,16 @@ import { IconButton } from "../Common/IconButton";
 
 function getVisibleCount(width: number, widgetType?: number) {
   // Large landscape thumbnails — fewer per row so each is bigger
-  if (widgetType === 4) {
-    if (width >= 1440) return 4;
-    if (width >= 1280) return 3;
-    if (width >= 768) return 3;
-    return 1.5;
-  }
+  // if (widgetType === 4) {
+  //   if (width >= 1440) return 4;
+  //   if (width >= 1280) return 3;
+  //   if (width >= 768) return 3;
+  //   return 1.5;
+  // }
   // Top 10 (type 2), small landscape (type 3), and default
   if (width >= 1440) return 5;
   if (width >= 1280) return 4;
-  if (width >= 768) return 5;
+  if (width >= 768) return 3;
   return 2.2;
 }
 
@@ -146,7 +146,12 @@ export function MovieRow({
       const distanceToEnd = isRTL
         ? scrollLeft + (scrollWidth - clientWidth)
         : scrollWidth - clientWidth - scrollLeft;
-      if (onLoadMore && hasMore && !isLoadingMore && distanceToEnd < clientWidth) {
+      if (
+        onLoadMore &&
+        hasMore &&
+        !isLoadingMore &&
+        distanceToEnd < clientWidth
+      ) {
         onLoadMore();
       }
     }
@@ -302,11 +307,11 @@ export function MovieRow({
         {/* LEFT ARROW */}
         <button
           onClick={() => scroll("left")}
-          className={`hidden xl:block absolute top-0 bottom-0 start-0 z-[60] w-12  flex items-center justify-center bg-black/70 transition-opacity duration-300 hover:bg-black/80 cursor-pointer rounded-se-lg rounded-ee-lg ${
+          className={`hidden xl:block absolute top-0 bottom-0 start-0 z-[60] w-12 flex items-center justify-center bg-black/80 transition-opacity duration-300 hover:bg-black/80 cursor-pointer rounded-se-lg rounded-ee-lg h-[92%] ${
             isHovered && (isRTL ? canScrollRight : canScrollLeft)
               ? "opacity-100"
               : "opacity-0 pointer-events-none"
-          } ${widgetType === 4 ? "xl:h-[92%]" : "xl:h-[82%]"}`}
+          }`}
         >
           {isRTL ? (
             <ChevronRight className="w-8 h-8 text-white" />
@@ -318,11 +323,11 @@ export function MovieRow({
         {/* RIGHT ARROW */}
         <button
           onClick={() => scroll("right")}
-          className={`hidden xl:block absolute top-0 bottom-0 end-0 z-[60] w-12 flex items-center justify-center bg-black/70 transition-opacity duration-300 hover:bg-black/80 cursor-pointer rounded-ss-lg rounded-es-lg ${
+          className={`hidden xl:block absolute top-0 bottom-0 end-0 z-[60] w-12 flex items-center justify-center bg-black/80 transition-opacity duration-300 hover:bg-black/80 cursor-pointer rounded-ss-lg rounded-es-lg h-[92%] ${
             isHovered && (isRTL ? canScrollLeft : canScrollRight)
               ? "opacity-100"
               : "opacity-0 pointer-events-none"
-          } ${widgetType === 4 ? "xl:h-[92%]" : "xl:h-[82%]"}`}
+          }`}
         >
           {isRTL ? (
             <ChevronLeft className="w-8 h-8 text-white" />

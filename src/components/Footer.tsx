@@ -53,7 +53,7 @@ const Footer = () => {
 
   const openSupport = () => {
     track(AnalyticsEventType.openSupport);
-    window.open(supportPageUrl, "_blank");
+    router.push("/support");
   };
 
   const openTerms = () => {

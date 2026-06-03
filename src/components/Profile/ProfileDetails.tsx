@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useUserProfile, useUpdateUserProfile } from "@/hooks/useAuth";
+import { useRequestEmailChange } from "@/hooks/useEmailChange";
 import { useLanguage } from "@/context/LanguageContext";
 import { Button } from "@/components/Common/Button";
 import { Input } from "@/components/Common/Input";
@@ -20,12 +21,52 @@ export function ProfileDetails({ onBack }: { onBack?: () => void }) {
   const { t } = useLanguage();
   const { data: profile, isLoading, refetch } = useUserProfile();
   const updateProfile = useUpdateUserProfile();
+  const requestEmailChange = useRequestEmailChange();
 
   const [formData, setFormData] = useState({
     name: "",
     countryCode: "+971",
     phoneNumber: "",
   });
+
+  const [showEmailChange, setShowEmailChange] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
+  const [emailPassword, setEmailPassword] = useState("");
+  const [emailError, setEmailError] = useState<string | undefined>();
+
+  const handleRequestEmailChange = async () => {
+    setEmailError(undefined);
+    const trimmedEmail = newEmail.trim();
+    const currentEmail = profile?.user?.email || "";
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      setEmailError(t("invalidEmail"));
+      return;
+    }
+    if (trimmedEmail.toLowerCase() === currentEmail.toLowerCase()) {
+      setEmailError(t("emailMustBeDifferent"));
+      return;
+    }
+
+    try {
+      const res = await requestEmailChange.mutateAsync({
+        newEmail: trimmedEmail,
+        password: emailPassword,
+      });
+      if (res.status) {
+        toast(res.message || t("verificationEmailSent"), "success");
+        setShowEmailChange(false);
+        setNewEmail("");
+        setEmailPassword("");
+      } else {
+        // Server errors (invalid password, email already registered,
+        // cooldown, …) aren't tied to a single field — show them as a toast.
+        toast(res.message || t("somethingWentWrong"), "error");
+      }
+    } catch (error: any) {
+      toast(error?.response?.data?.message || t("somethingWentWrong"), "error");
+    }
+  };
 
   const sanitizedPhone = formData.phoneNumber.replace(/\s+/g, "");
   const phoneError =
@@ -84,7 +125,7 @@ export function ProfileDetails({ onBack }: { onBack?: () => void }) {
   return (
     <div className="w-full max-w-2xl mx-auto text-start">
       <div className="space-y-6 rounded-md sm:max-w-md 2xl:max-w-lg mx-auto">
-        <div className="relative flex flex-col space-y-2 items-center justify-center pt-[5rem] pb-[1rem] sm:pt-[6.5rem]">
+        <div className="relative flex flex-col space-y-2 items-center justify-center pt-[5rem] pb-[1rem] sm:pt-[8.5rem]">
           {/* <BackButton className="absolute start-0" size={24} /> */}
           <h1 className="text-lg sm:text-2xl font-bold">
             {t("editPersonalInfo")}
@@ -145,16 +186,62 @@ export function ProfileDetails({ onBack }: { onBack?: () => void }) {
           </div>
 
           <div className="space-y-2">
-            <Input
-              type="email"
-              value={user?.email || ""}
-              readOnly
-              disabled
-              className="h-10 sm:h-12 rounded-full text-sm sm:px-5 border-neutral-700 bg-transparent text-neutral-400 placeholder-neutral-400 cursor-not-allowed"
-            />
-            <p className="text-[10px] sm:text-xs text-neutral-500 px-2">
-              {t("cannotModifyEmail")}
-            </p>
+            <div className="relative">
+              <Input
+                type="email"
+                value={user?.email || ""}
+                readOnly
+                disabled
+                className="h-10 sm:h-12 rounded-full text-sm sm:px-5 pe-24 border-neutral-700 bg-transparent text-neutral-400 placeholder-neutral-400 cursor-not-allowed"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setShowEmailChange((v) => !v);
+                  setEmailError(undefined);
+                  setNewEmail("");
+                  setEmailPassword("");
+                }}
+                className="absolute end-4 top-1/2 -translate-y-1/2 text-primary text-xs sm:text-sm font-semibold hover:underline cursor-pointer"
+              >
+                {showEmailChange ? t("cancel") : t("changeEmail")}
+              </button>
+            </div>
+
+            {showEmailChange && (
+              <div className="mt-2 space-y-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                <Input
+                  type="email"
+                  value={newEmail}
+                  onChange={(e) => {
+                    setNewEmail(e.target.value);
+                    setEmailError(undefined);
+                  }}
+                  placeholder={t("newEmail")}
+                  error={emailError}
+                  className="h-10 sm:h-12 rounded-full text-sm sm:px-5 border-neutral-200 bg-white text-neutral-900 placeholder-neutral-400"
+                />
+                <Input
+                  type="password"
+                  value={emailPassword}
+                  onChange={(e) => setEmailPassword(e.target.value)}
+                  placeholder={t("currentPassword")}
+                  className="h-10 sm:h-12 rounded-full text-sm sm:px-5 border-neutral-200 bg-white text-neutral-900 placeholder-neutral-400"
+                />
+                <p className="text-[10px] sm:text-xs text-neutral-400 px-2">
+                  {t("emailChangeNote")}
+                </p>
+                <Button
+                  onClick={handleRequestEmailChange}
+                  isLoading={requestEmailChange.isPending}
+                  disabled={!newEmail.trim() || !emailPassword}
+                  variant="primary"
+                  className="w-full h-10 sm:h-12"
+                >
+                  {t("sendVerificationEmail")}
+                </Button>
+              </div>
+            )}
           </div>
         </div>
 
