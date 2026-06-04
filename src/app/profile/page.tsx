@@ -381,7 +381,7 @@ export default function ProfilePage() {
       {/* <BackgroundVideo /> */}
       <Header />
       {activeTab !== "profile" && (
-        <div className="relative flex flex-col space-y-2 items-center justify-center pt-[5rem] pb-[2rem] sm:pt-[6.5rem] sm:pb-[4rem] bg-background">
+        <div className="relative flex flex-col space-y-2 items-center justify-center pt-[5rem] pb-[2rem] sm:pt-[8.5rem] sm:pb-[4rem] bg-background">
           {/* <BackButton className="absolute start-0" size={24} /> */}
           <h1 className="text-xl sm:text-3xl font-bold">
             {t("accountSettings")}
