@@ -35,7 +35,7 @@ export function SubscriptionModal({ isOpen, onClose }: SubscriptionModalProps) {
         </button>
 
         <div className="flex flex-col items-center text-center space-y-6">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-sky-500 via-cyan-500 to-teal-500 flex items-center justify-center shadow-lg shadow-teal-500/20">
+          <div className="w-20 h-20 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
             <CreditCard size={40} className="text-white" />
           </div>
 
@@ -52,13 +52,12 @@ export function SubscriptionModal({ isOpen, onClose }: SubscriptionModalProps) {
               "Ad-free streaming",
               "4K Ultra HD quality",
               "Watch on all devices",
-              "Download and watch offline",
             ].map((feature, i) => (
               <div
                 key={i}
                 className="flex items-center gap-3 text-sm text-zinc-300"
               >
-                <CheckCircle size={18} className="text-teal-500 shrink-0" />
+                <CheckCircle size={18} className="text-primary shrink-0" />
                 <span>{feature}</span>
               </div>
             ))}
