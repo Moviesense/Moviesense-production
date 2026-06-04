@@ -15,6 +15,7 @@ import {
   useValidateCoupon,
 } from "@/hooks/useSubscription";
 import { useSubscriptionStatus } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 import type {
   ParseUrlSuccess,
   SubscriptionPlanItem,
@@ -63,8 +64,10 @@ export default function PlansView({ parsed }: Props) {
   } | null>(null);
 
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const plansQuery = useSubscriptionPlansByCountry(parsed.country);
-  const statusQuery = useSubscriptionStatus();
+  // Only logged-in users have a subscription status to fetch.
+  const statusQuery = useSubscriptionStatus(isAuthenticated);
   const activePlan = statusQuery.data?.plan ?? null;
   const validateCoupon = useValidateCoupon();
   const incrementAnalytics = useIncrementAnalytics();
