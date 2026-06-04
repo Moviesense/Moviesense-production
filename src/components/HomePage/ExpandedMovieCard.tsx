@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { MovieCardProps } from "./MovieCard";
 import { motion } from "framer-motion";
 import { useToggleFavorite, useToggleLike } from "@/hooks/useMovie";
+import { movieService } from "@/services/movieService";
 import { IconButton } from "../Common/IconButton";
 import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
@@ -94,6 +95,28 @@ export function ExpandedMovieCard({
 
   const toggleFavorite = useToggleFavorite();
   const { isAuthenticated, isSubscribed } = useAuth();
+
+  // The list/widget API doesn't return per-item favorite status, so fetch the
+  // real value from the server when the card expands (logged-in movies only).
+  useEffect(() => {
+    if (!isAuthenticated || isEpisode || !id) return;
+
+    let cancelled = false;
+    movieService
+      .checkFavorite(String(id))
+      .then((response) => {
+        if (!cancelled && response.status) {
+          setIsFavorite(response.isFavorite);
+        }
+      })
+      .catch((error) => {
+        console.error("Error checking favorite status:", error);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isAuthenticated, isEpisode, id]);
   const { t } = useLanguage();
 
   const handleToggleFavorite = async (e?: React.MouseEvent) => {

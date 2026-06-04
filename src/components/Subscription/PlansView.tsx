@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 import { Check, CheckCircle2, Loader2, Tag, X } from "lucide-react";
 import { Button } from "@/components/Common/Button";
 import { Input } from "@/components/Common/Input";
@@ -78,8 +79,9 @@ export default function PlansView({ parsed }: Props) {
     router.push(`/subscription/cancel/${parsed.token}`);
   };
 
-  // Increment view count once.
+  // Increment view count once — only for logged-in users (no token, no call).
   useEffect(() => {
+    if (!Cookies.get("token")) return;
     incrementAnalytics.mutate({ eventType: "subscription_plans_view" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
