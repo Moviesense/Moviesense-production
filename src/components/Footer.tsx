@@ -76,7 +76,7 @@ const Footer = () => {
     { label: t("accountLogin"), onClick: () => router.push("/login") },
     { label: t("signup"), onClick: () => router.push("/signup") },
     { label: t("manageAccount"), onClick: () => router.push("/profile") },
-    { label: t("contactUs"), onClick: () => router.push("/contact") },
+    { label: t("contactUs"), onClick: () => router.push("/support") },
   ];
 
   const otherLinks = [

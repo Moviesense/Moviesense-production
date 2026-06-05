@@ -23,11 +23,11 @@ const contactOptions = [
     icon: "✉️",
     title: "Email Support",
     body: (
-      <a href="mailto:support@moviesense.com" className="text-primary">
-        support@moviesense.com
+      <a href="mailto:developer@visionpictures.com.au" className="text-primary">
+        developer@visionpictures.com.au
       </a>
     ),
-    href: "mailto:support@moviesense.com",
+    href: "mailto:developer@visionpictures.com.au",
   },
   {
     icon: "🔑",
