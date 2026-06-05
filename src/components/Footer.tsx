@@ -8,7 +8,7 @@ import { useAnalytics } from "@/hooks/useAnalytics";
 import { AnalyticsEventType } from "@/types/analytics";
 import { useAuth } from "@/context/AuthContext";
 import { useRenewSubscription } from "@/hooks/useAuth";
-import { getCountry, supportPageUrl } from "@/lib/utils";
+import { getCountry } from "@/lib/utils";
 import { toast } from "@/context/ToastContext";
 
 const Footer = () => {

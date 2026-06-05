@@ -31,7 +31,7 @@ import { toast } from "@/context/ToastContext";
 import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { Header } from "@/components/HomePage/Header";
-import { getCountry, supportPageUrl } from "@/lib/utils";
+import { getCountry } from "@/lib/utils";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { AnalyticsEventType } from "@/types/analytics";
 import { ProfileDetails } from "@/components/Profile/ProfileDetails";
@@ -132,7 +132,7 @@ export default function ProfilePage() {
     if (activeTab === "history") {
       router.push("/history");
     } else if (activeTab === "support") {
-      window.open(supportPageUrl, "_blank");
+      router.push("/support");
     } else if (activeTab === "terms") {
       if (supportLinks?.tncLink) {
         window.open(supportLinks.tncLink, "_blank");
