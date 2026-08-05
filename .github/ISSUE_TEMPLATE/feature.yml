@@ -1,0 +1,64 @@
+name: "✨ Feature Request"
+description: Request a new feature, improvement or enhancement
+title: "[FEATURE] "
+labels:
+  - feature
+  - needs-triage
+
+body:
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - "🔴 Critical — Required immediately"
+        - "🟠 High — Important / upcoming requirement"
+        - "🟡 Medium — Useful improvement"
+        - "🟢 Low — Nice to have"
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Feature Summary
+      description: What would you like added or changed?
+      placeholder: Describe the requested feature...
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / Business Need
+      description: What problem does this feature solve?
+      placeholder: Currently users have to...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe how you think the feature should work.
+
+  - type: textarea
+    id: requirements
+    attributes:
+      label: Requirements / Acceptance Criteria
+      placeholder: |
+        - [ ] User can...
+        - [ ] System should...
+        - [ ] Admin can...
+        - [ ] Error handling...
+
+  - type: textarea
+    id: references
+    attributes:
+      label: Designs / References
+      description: Add screenshots, Figma links, examples or other references.
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional Notes
